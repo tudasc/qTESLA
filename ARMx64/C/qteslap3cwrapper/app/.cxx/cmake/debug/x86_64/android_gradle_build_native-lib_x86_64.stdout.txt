@@ -1,0 +1,4 @@
+ninja: Entering directory `C:\Users\tuxed\AndroidStudioProjects\qteslap3cwrapper\app\.cxx\cmake\debug\x86_64'
+[1/2] Building CXX object CMakeFiles/native-lib.dir/tests/test_qtesla.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[2/2] Linking CXX shared library C:\Users\tuxed\AndroidStudioProjects\qteslap3cwrapper\app\build\intermediates\cmake\debug\obj\x86_64\libnative-lib.so

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TableLayout
+        android:layout_width="395dp"
+        android:layout_height="720dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+
+            <TextView
+                android:textSize="12sp"
+                android:id="@+id/textView"
+                android:layout_weight=".18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="No. iterations" />
+
+            <EditText
+                android:textSize="12sp"
+                android:id="@+id/edit_its"
+                android:layout_weight=".1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".18"
+                android:text="RSA bitlength"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edit_bitlen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1024"
+                android:textSize="12sp" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="0dp"
+                android:layout_weight=".1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".18"
+                android:layout_height="wrap_content"
+                android:text="Singings per it." />
+
+            <EditText
+                android:id="@+id/edit_signs"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".1"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="2" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".18"
+                android:text="FREE"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edit_free"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".1"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="0dp"
+                android:layout_weight=".1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".18"
+                android:layout_height="wrap_content"
+                android:text="No. of threads" />
+
+            <EditText
+                android:id="@+id/edit_threads"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".1"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+
+            <Space
+                android:id="@+id/space3"
+                android:layout_width="0dp"
+                android:layout_weight=".2" />
+
+            <Button
+                android:id="@+id/btn_start_p3"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_weight=".18"
+                android:layout_height="wrap_content"
+                android:text="Starting P3" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/cb_cqtesla"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check qTesla" />
+
+            <CheckBox
+                android:id="@+id/cb_crsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check RSA" />
+
+            <CheckBox
+                android:id="@+id/cb_cgenrsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Gen RSA-Keys" />
+
+            <CheckBox
+                android:id="@+id/cb_cecdsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check ECDSA" />
+
+            <Space
+                android:id="@+id/space4"
+                android:layout_width="0dp"
+                android:layout_weight=".2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+
+            <EditText
+                android:id="@+id/sample_text"
+                android:layout_width="382dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </TableRow>
+    </TableLayout>
+
+            </android.support.constraint.ConstraintLayout>
+
+    <!---
+                <TextView
+                    android:id="@+id/sample_text"
+                    android:textSize="11sp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.0"
+                    android:layout_height="wrap_content"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </TableRow>
+           -->

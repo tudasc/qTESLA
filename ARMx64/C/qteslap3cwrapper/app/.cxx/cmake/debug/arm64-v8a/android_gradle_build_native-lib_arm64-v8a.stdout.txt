@@ -1,0 +1,28 @@
+ninja: Entering directory `C:\Users\tuxed\AndroidStudioProjects\qteslap3cwrapper\app\.cxx\cmake\debug\arm64-v8a'
+[1/14] Building CXX object CMakeFiles/native-lib.dir/consts.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[2/14] Building CXX object CMakeFiles/native-lib.dir/sample.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[3/14] Building CXX object CMakeFiles/native-lib.dir/poly.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[4/14] Building CXX object CMakeFiles/native-lib.dir/tests/cpucycles.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[5/14] Building CXX object CMakeFiles/native-lib.dir/gauss.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[6/14] Building CXX object CMakeFiles/native-lib.dir/pack.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[7/14] Building CXX object CMakeFiles/native-lib.dir/sha3/fips202.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[8/14] Building CXX object CMakeFiles/native-lib.dir/random/random.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[9/14] Building CXX object CMakeFiles/native-lib.dir/sign.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[10/14] Building CXX object CMakeFiles/native-lib.dir/tests/rng.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[11/14] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[12/14] Building CXX object CMakeFiles/native-lib.dir/tests/Logger.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[13/14] Building CXX object CMakeFiles/native-lib.dir/tests/test_qtesla.cpp.o
+clang++: warning: argument unused during compilation: '-static-openmp' [-Wunused-command-line-argument]
+[14/14] Linking CXX shared library C:\Users\tuxed\AndroidStudioProjects\qteslap3cwrapper\app\build\intermediates\cmake\debug\obj\arm64-v8a\libnative-lib.so

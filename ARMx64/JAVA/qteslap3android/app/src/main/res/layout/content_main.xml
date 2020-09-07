@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TableLayout
+        android:layout_width="395dp"
+        android:layout_height="659dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textSize="12dp"
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:text="No. of runs" />
+
+            <EditText
+                android:textSize="12dp"
+                android:id="@+id/editText2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".05"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+
+            <TextView
+                android:textSize="12dp"
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".15"
+                android:text="RSA bitlength" />
+
+            <EditText
+                android:textSize="12dp"
+                android:id="@+id/edit_bitlen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".10"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1024" />
+            <Space
+                android:id="@+id/space1_1"
+                android:layout_width="0dp"
+                android:layout_weight=".10" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textSize="12dp"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:id="@+id/textView2"
+                android:layout_height="wrap_content"
+                android:text="Signs per run" />
+
+            <EditText
+                android:textSize="12dp"
+                android:id="@+id/editText3"
+                android:layout_width="0dp"
+                android:layout_weight=".05"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+            <Space
+                android:id="@+id/space2_1"
+                android:layout_width="0dp"
+                android:layout_weight=".10" />
+            <Button
+                android:textSize="12dp"
+                android:id="@+id/button"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:layout_height="wrap_content"
+                android:text="Start" />
+            <Space
+                android:id="@+id/space2_2"
+                android:layout_width="0dp"
+                android:layout_weight=".10" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textSize="12dp"
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_weight=".15"
+                android:layout_height="wrap_content"
+                android:text="No. of threads" />
+
+            <EditText
+                android:textSize="12dp"
+                android:id="@+id/editText4"
+                android:layout_width="0dp"
+                android:layout_weight=".05"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="1" />
+
+            <Space
+                android:id="@+id/space3_1"
+                android:layout_width="0dp"
+                android:layout_weight=".15" />
+
+            <Space
+                android:id="@+id/space3_2"
+                android:layout_width="0dp"
+                android:layout_weight=".10" />
+
+            <Space
+                android:id="@+id/space3_23"
+                android:layout_width="0dp"
+                android:layout_weight=".10" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/cb_cqtesla"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check qTesla" />
+
+            <CheckBox
+                android:id="@+id/cb_crsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check RSA" />
+
+            <CheckBox
+                android:id="@+id/cb_cgenrsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Gen RSA-Keys" />
+
+            <CheckBox
+                android:id="@+id/cb_cecdsa"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_weight=".20"
+                android:layout_height="wrap_content"
+                android:text="Check ECDSA" />
+
+            <Space
+                android:id="@+id/space4"
+                android:layout_width="0dp"
+                android:layout_weight=".2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="match_parent" >
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="385dp"
+                android:layout_height="353dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:textSize="12sp"
+                app:layout_anchor="@+id/include"
+                app:layout_anchorGravity="bottom|center" />
+    </TableRow>
+
+    </TableLayout>
+</android.support.constraint.ConstraintLayout>

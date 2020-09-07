@@ -1,0 +1,106 @@
+{
+  "stringTable": {
+    "0": "C:/Users/tuxed/AndroidStudioProjects/qteslap3cwrapper/app/.cxx/cmake/release/x86_64",
+    "1": "--target=x86_64-none-linux-android24 --gcc-toolchain=C:/Users/tuxed/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/Users/tuxed/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dnative_lib_EXPORTS -IC:/Users/tuxed/AndroidStudioProjects/qteslap3cwrapper/app/src/main/cpp/src/main/cpp/include -IC:/compile/x86_64/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O3 -std=c++11 -D __LINUX__ -Wno-write-strings -D_REFERENCE_ -D_AMD64_ -D _qTESLA_p_III_ -fopenmp -static-openmp -O3 -fopenmp=libomp -O2 -DNDEBUG -fPIC"
+  },
+  "buildFiles": [
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86_64\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86_64\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "native-lib-Release-x86_64": {
+      "buildCommand": "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86_64\" native-lib",
+      "buildType": "release",
+      "toolchain": "4090385935",
+      "abi": "x86_64",
+      "artifactName": "native-lib",
+      "files": [
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\native-lib.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\consts.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\gauss.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\pack.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\poly.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\sample.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\sign.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\random\\random.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\sha3\\fips202.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\tests\\cpucycles.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\tests\\rng.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\tests\\test_qtesla.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\tests\\Logger.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\build\\intermediates\\cmake\\release\\obj\\x86_64\\libnative-lib.so",
+      "runtimeFiles": [
+        "C:\\compile\\x86_64\\ssl\\libssl_1_1.a",
+        "C:\\compile\\x86_64\\crypto\\libcrypto_1_1.a"
+      ]
+    }
+  },
+  "toolchains": {
+    "4090385935": {
+      "cppCompilerExecutable": "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "buildFiles": [
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\platforms.cmake",
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\ndk-bundle\\build\\cmake\\android.toolchain.cmake",
+    "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86\" clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "native-lib-Release-x86": {
+      "artifactName": "native-lib",
+      "buildCommand": "C:\\Users\\tuxed\\AppData\\Local\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\.cxx\\cmake\\release\\x86\" native-lib",
+      "abi": "x86",
+      "output": "C:\\Users\\tuxed\\AndroidStudioProjects\\qteslap3cwrapper\\app\\build\\intermediates\\cmake\\release\\obj\\x86\\libnative-lib.so",
+      "runtimeFiles": [
+        "C:\\compile\\x86\\ssl\\libssl_1_1.a",
+        "C:\\compile\\x86\\crypto\\libcrypto_1_1.a"
+      ]
+    }
+  }
+}
