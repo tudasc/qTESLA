@@ -1,0 +1,90 @@
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.264365 s, average: 5.287306 ms (189.132235 ops/s) 
+[qtesla:] Signing Time: Total time: 4.188794 s, average: 1.675517 ms (596.830553 ops/s) 
+[qtesla:] Verify Time: Total time: 1.164501 s, average: 0.465801 ms (2146.841558 ops/s) 
+Overall program time: 5.696187 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.272001 s, average: 5.440018 ms (183.822921 ops/s) 
+[qtesla:] Signing Time: Total time: 4.140394 s, average: 1.656158 ms (603.807241 ops/s) 
+[qtesla:] Verify Time: Total time: 1.134475 s, average: 0.453790 ms (2203.662487 ops/s) 
+Overall program time: 5.625685 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.267436 s, average: 5.348714 ms (186.960828 ops/s) 
+[qtesla:] Signing Time: Total time: 4.158709 s, average: 1.663484 ms (601.148082 ops/s) 
+[qtesla:] Verify Time: Total time: 1.121790 s, average: 0.448716 ms (2228.581902 ops/s) 
+Overall program time: 5.627141 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.270438 s, average: 5.408770 ms (184.884918 ops/s) 
+[qtesla:] Signing Time: Total time: 4.246485 s, average: 1.698594 ms (588.722133 ops/s) 
+[qtesla:] Verify Time: Total time: 1.134979 s, average: 0.453992 ms (2202.684120 ops/s) 
+Overall program time: 5.732092 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.276151 s, average: 5.523014 ms (181.060559 ops/s) 
+[qtesla:] Signing Time: Total time: 4.154548 s, average: 1.661819 ms (601.750222 ops/s) 
+[qtesla:] Verify Time: Total time: 1.123959 s, average: 0.449583 ms (2224.281413 ops/s) 
+Overall program time: 5.634068 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.267648 s, average: 5.352954 ms (186.812739 ops/s) 
+[qtesla:] Signing Time: Total time: 4.185845 s, average: 1.674338 ms (597.250902 ops/s) 
+[qtesla:] Verify Time: Total time: 1.148063 s, average: 0.459225 ms (2177.581416 ops/s) 
+Overall program time: 5.679862 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.270407 s, average: 5.408144 ms (184.906319 ops/s) 
+[qtesla:] Signing Time: Total time: 4.172525 s, average: 1.669010 ms (599.157541 ops/s) 
+[qtesla:] Verify Time: Total time: 1.130564 s, average: 0.452225 ms (2211.286477 ops/s) 
+Overall program time: 5.651604 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.270731 s, average: 5.414618 ms (184.685235 ops/s) 
+[qtesla:] Signing Time: Total time: 4.156018 s, average: 1.662407 ms (601.537366 ops/s) 
+[qtesla:] Verify Time: Total time: 1.135170 s, average: 0.454068 ms (2202.312340 ops/s) 
+Overall program time: 5.639642 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.269614 s, average: 5.392276 ms (185.450448 ops/s) 
+[qtesla:] Signing Time: Total time: 4.170606 s, average: 1.668243 ms (599.433229 ops/s) 
+[qtesla:] Verify Time: Total time: 1.127807 s, average: 0.451123 ms (2216.690938 ops/s) 
+Overall program time: 5.647106 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.267324 s, average: 5.346472 ms (187.039229 ops/s) 
+[qtesla:] Signing Time: Total time: 4.162360 s, average: 1.664944 ms (600.620787 ops/s) 
+[qtesla:] Verify Time: Total time: 1.142626 s, average: 0.457050 ms (2187.942320 ops/s) 
+Overall program time: 5.649991 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.267985 s, average: 5.359696 ms (186.577746 ops/s) 
+[qtesla:] Signing Time: Total time: 4.155024 s, average: 1.662010 ms (601.681256 ops/s) 
+[qtesla:] Verify Time: Total time: 1.150887 s, average: 0.460355 ms (2172.238342 ops/s) 
+Overall program time: 5.651987 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.267623 s, average: 5.352462 ms (186.829911 ops/s) 
+[qtesla:] Signing Time: Total time: 4.300577 s, average: 1.720231 ms (581.317317 ops/s) 
+[qtesla:] Verify Time: Total time: 1.119230 s, average: 0.447692 ms (2233.678511 ops/s) 
+Overall program time: 5.766389 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.265540 s, average: 5.310808 ms (188.295265 ops/s) 
+[qtesla:] Signing Time: Total time: 4.147107 s, average: 1.658843 ms (602.829862 ops/s) 
+[qtesla:] Verify Time: Total time: 1.132801 s, average: 0.453121 ms (2206.918371 ops/s) 
+Overall program time: 5.623139 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.268365 s, average: 5.367292 ms (186.313694 ops/s) 
+[qtesla:] Signing Time: Total time: 4.166131 s, average: 1.666452 ms (600.077146 ops/s) 
+[qtesla:] Verify Time: Total time: 1.151002 s, average: 0.460401 ms (2172.021307 ops/s) 
+Overall program time: 5.664464 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ Setting global threads to 4
+[qtesla:] Key Generation Time: Total time: 0.270399 s, average: 5.407972 ms (184.912200 ops/s) 
+[qtesla:] Signing Time: Total time: 4.207867 s, average: 1.683147 ms (594.125284 ops/s) 
+[qtesla:] Verify Time: Total time: 1.144517 s, average: 0.457807 ms (2184.326583 ops/s) 
+Overall program time: 5.704416 s.

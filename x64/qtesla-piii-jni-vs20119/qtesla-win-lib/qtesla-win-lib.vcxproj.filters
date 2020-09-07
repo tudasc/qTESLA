@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\random">
+      <UniqueIdentifier>{519b1578-e5bc-4caa-8def-7be3db5cea1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\sha3">
+      <UniqueIdentifier>{b903ee60-3fa5-4ad7-8672-5682ad467a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\tests">
+      <UniqueIdentifier>{0d1c180c-6931-496c-90cb-3cc331ca55b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\random">
+      <UniqueIdentifier>{c649d35b-0815-4329-86af-93bb0a08f08f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\sha3">
+      <UniqueIdentifier>{f54ad1a3-b106-4141-ae9f-69955b4e23b8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\qteslap3ccode\api.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\CDT32.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\CDT64.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\config.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\gauss.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\pack.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\params.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\poly.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\qTeslaTest.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\qTeslaTestJNI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\reduce.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\sample.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\random\random.h">
+      <Filter>Headerdateien\random</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\sha3\fips202.h">
+      <Filter>Headerdateien\sha3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\tests\cpucycles.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="..\qteslap3ccode\tests\rng.h">
+      <Filter>Headerdateien\tests</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\qteslap3ccode\random\random.c">
+      <Filter>Quelldateien\random</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\sha3\fips202.c">
+      <Filter>Quelldateien\sha3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\sign.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\sample.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\poly.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\pack.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\gauss.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="..\qteslap3ccode\consts.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

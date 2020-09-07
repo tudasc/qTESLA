@@ -1,0 +1,112 @@
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.309003 s, average: 6.180052 ms (161.810936 ops/s) 
+[qtesla:] Signing Time: Total time: 6.032929 s, average: 2.413171 ms (414.392433 ops/s) 
+[qtesla:] Verify Time: Total time: 1.484478 s, average: 0.593791 ms (1684.094235 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.257686 s, Median number: 2.935050 ms, average number: 5.153724 ms (194.034450 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.570720 s, Median number: 3.001300 ms, average number: 3.028288 ms (330.219565 ops/s)
+[ECDSA:] Total time: 11.290836 s, Verification Time: Median number: 4.506600 ms, average number: 4.516334 ms (221.418499 ops/s)
+
+[RSA:] Key Generation Time: Total time: 407.818562 s, Median number: 6493.409500 ms, average number: 8156.371246 ms (0.122604 ops/s) 
+[RSA:] Signing Time: Total time: 124.330382 s, Median number: 49.048750 ms, average number: 49.732153 ms (20.107716 ops/s)
+[RSA:] Total time: 1.269739 s, Verification Time: Median number: 0.497800 ms, average number: 0.507895 ms (1968.909191 ops/s)
+
+Overall program time: 560.451632 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.322285 s, average: 6.445704 ms (155.142092 ops/s) 
+[qtesla:] Signing Time: Total time: 5.953197 s, average: 2.381279 ms (419.942456 ops/s) 
+[qtesla:] Verify Time: Total time: 1.464722 s, average: 0.585889 ms (1706.808877 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.236894 s, Median number: 2.794300 ms, average number: 4.737888 ms (211.064508 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.428469 s, Median number: 2.950500 ms, average number: 2.971387 ms (336.543125 ops/s)
+[ECDSA:] Total time: 11.106293 s, Verification Time: Median number: 4.434450 ms, average number: 4.442517 ms (225.097607 ops/s)
+
+[RSA:] Key Generation Time: Total time: 445.442273 s, Median number: 7718.395100 ms, average number: 8908.845452 ms (0.112248 ops/s) 
+[RSA:] Signing Time: Total time: 123.512306 s, Median number: 48.943600 ms, average number: 49.404923 ms (20.240898 ops/s)
+[RSA:] Total time: 1.256476 s, Verification Time: Median number: 0.496300 ms, average number: 0.502590 ms (1989.691963 ops/s)
+
+Overall program time: 596.808117 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.317895 s, average: 6.357892 ms (157.284836 ops/s) 
+[qtesla:] Signing Time: Total time: 5.999812 s, average: 2.399925 ms (416.679757 ops/s) 
+[qtesla:] Verify Time: Total time: 1.460633 s, average: 0.584253 ms (1711.587158 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.237381 s, Median number: 2.798800 ms, average number: 4.747620 ms (210.631853 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.456239 s, Median number: 2.964200 ms, average number: 2.982496 ms (335.289659 ops/s)
+[ECDSA:] Total time: 11.139327 s, Verification Time: Median number: 4.446750 ms, average number: 4.455731 ms (224.430080 ops/s)
+
+[RSA:] Key Generation Time: Total time: 417.169556 s, Median number: 6208.245850 ms, average number: 8343.391116 ms (0.119855 ops/s) 
+[RSA:] Signing Time: Total time: 124.400471 s, Median number: 49.308250 ms, average number: 49.760188 ms (20.096387 ops/s)
+[RSA:] Total time: 1.261728 s, Verification Time: Median number: 0.498200 ms, average number: 0.504691 ms (1981.409622 ops/s)
+
+Overall program time: 569.528186 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.293972 s, average: 5.879440 ms (170.084226 ops/s) 
+[qtesla:] Signing Time: Total time: 5.916540 s, average: 2.366616 ms (422.544257 ops/s) 
+[qtesla:] Verify Time: Total time: 1.489565 s, average: 0.595826 ms (1678.342673 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.236732 s, Median number: 2.788550 ms, average number: 4.734640 ms (211.209300 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.434401 s, Median number: 2.953750 ms, average number: 2.973760 ms (336.274579 ops/s)
+[ECDSA:] Total time: 11.103358 s, Verification Time: Median number: 4.434200 ms, average number: 4.441343 ms (225.157108 ops/s)
+
+[RSA:] Key Generation Time: Total time: 427.107285 s, Median number: 7712.290450 ms, average number: 8542.145700 ms (0.117067 ops/s) 
+[RSA:] Signing Time: Total time: 123.746707 s, Median number: 48.983800 ms, average number: 49.498683 ms (20.202558 ops/s)
+[RSA:] Total time: 1.261172 s, Verification Time: Median number: 0.497000 ms, average number: 0.504469 ms (1982.283618 ops/s)
+
+Overall program time: 578.672782 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.309075 s, average: 6.181492 ms (161.773242 ops/s) 
+[qtesla:] Signing Time: Total time: 5.902664 s, average: 2.361066 ms (423.537547 ops/s) 
+[qtesla:] Verify Time: Total time: 1.474990 s, average: 0.589996 ms (1694.926401 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.239210 s, Median number: 2.804950 ms, average number: 4.784206 ms (209.021100 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.481193 s, Median number: 2.956700 ms, average number: 2.992477 ms (334.171283 ops/s)
+[ECDSA:] Total time: 11.185727 s, Verification Time: Median number: 4.445100 ms, average number: 4.474291 ms (223.499101 ops/s)
+
+[RSA:] Key Generation Time: Total time: 399.982308 s, Median number: 6270.849700 ms, average number: 7999.646154 ms (0.125006 ops/s) 
+[RSA:] Signing Time: Total time: 124.742396 s, Median number: 49.283050 ms, average number: 49.896958 ms (20.041302 ops/s)
+[RSA:] Total time: 1.274637 s, Verification Time: Median number: 0.501300 ms, average number: 0.509855 ms (1961.342566 ops/s)
+
+Overall program time: 552.677228 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.321154 s, average: 6.423088 ms (155.688354 ops/s) 
+[qtesla:] Signing Time: Total time: 6.180222 s, average: 2.472089 ms (404.516213 ops/s) 
+[qtesla:] Verify Time: Total time: 1.514141 s, average: 0.605657 ms (1651.100749 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.241726 s, Median number: 2.925900 ms, average number: 4.834514 ms (206.846024 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.646593 s, Median number: 3.024700 ms, average number: 3.058637 ms (326.942976 ops/s)
+[ECDSA:] Total time: 11.391332 s, Verification Time: Median number: 4.539150 ms, average number: 4.556533 ms (219.465114 ops/s)
+
+[RSA:] Key Generation Time: Total time: 432.710172 s, Median number: 6440.087150 ms, average number: 8654.203434 ms (0.115551 ops/s) 
+[RSA:] Signing Time: Total time: 128.036113 s, Median number: 51.151450 ms, average number: 51.214445 ms (19.525741 ops/s)
+[RSA:] Total time: 1.316696 s, Verification Time: Median number: 0.520800 ms, average number: 0.526678 ms (1898.692166 ops/s)
+
+Overall program time: 589.452858 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.324591 s, average: 6.491818 ms (154.040055 ops/s) 
+[qtesla:] Signing Time: Total time: 6.191170 s, average: 2.476468 ms (403.800930 ops/s) 
+[qtesla:] Verify Time: Total time: 1.511500 s, average: 0.604600 ms (1653.986216 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.244189 s, Median number: 2.915750 ms, average number: 4.883774 ms (204.759680 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.646653 s, Median number: 3.026500 ms, average number: 3.058661 ms (326.940415 ops/s)
+[ECDSA:] Total time: 11.409532 s, Verification Time: Median number: 4.544400 ms, average number: 4.563813 ms (219.115040 ops/s)
+
+[RSA:] Key Generation Time: Total time: 382.248192 s, Median number: 5808.776950 ms, average number: 7644.963832 ms (0.130805 ops/s) 
+[RSA:] Signing Time: Total time: 128.858553 s, Median number: 51.204100 ms, average number: 51.543421 ms (19.401118 ops/s)
+[RSA:] Total time: 1.327521 s, Verification Time: Median number: 0.523350 ms, average number: 0.531008 ms (1883.209380 ops/s)
+
+Overall program time: 539.851157 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.379199 s, average: 7.583984 ms (131.856818 ops/s) 
+[qtesla:] Signing Time: Total time: 6.152426 s, average: 2.460971 ms (406.343754 ops/s) 
+[qtesla:] Verify Time: Total time: 1.503711 s, average: 0.601484 ms (1662.553730 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.239517 s, Median number: 2.903100 ms, average number: 4.790338 ms (208.753537 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.513496 s, Median number: 2.984600 ms, average number: 3.005398 ms (332.734589 ops/s)
+[ECDSA:] Total time: 11.328407 s, Verification Time: Median number: 4.528350 ms, average number: 4.531363 ms (220.684154 ops/s)
+
+[RSA:] Key Generation Time: Total time: 407.769111 s, Median number: 7199.640850 ms, average number: 8155.382228 ms (0.122618 ops/s) 
+[RSA:] Signing Time: Total time: 127.678991 s, Median number: 50.763900 ms, average number: 51.071596 ms (19.580355 ops/s)
+[RSA:] Total time: 1.318989 s, Verification Time: Median number: 0.520200 ms, average number: 0.527596 ms (1895.391091 ops/s)
+
+Overall program time: 563.979425 s.
+Performing 50 runs @ 50 singings with QTESLAProvider provider.
+ [qtesla:] Key Generation Time: Total time: 0.297294 s, average: 5.945878 ms (168.183740 ops/s) 
+[qtesla:] Signing Time: Total time: 6.122045 s, average: 2.448818 ms (408.360265 ops/s) 
+[qtesla:] Verify Time: Total time: 1.506768 s, average: 0.602707 ms (1659.180665 ops/s) 
+[ECDSA:] Key Generation Time: Total time: 0.243464 s, Median number: 2.977950 ms, average number: 4.869278 ms (205.369256 ops/s) 
+[ECDSA:] Signing Time: Total time: 7.683362 s, Median number: 3.045800 ms, average number: 3.073345 ms (325.378379 ops/s)
+[ECDSA:] Total time: 11.476123 s, Verification Time: Median number: 4.577500 ms, average number: 4.590449 ms (217.843597 ops/s)
+

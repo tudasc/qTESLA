@@ -1,0 +1,285 @@
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.283390 sec and 176.435273 ops/s.
+[QTESLA-P3] Sign: 6.140252 sec and 407.149390 ops/s.
+[QTESLA-P3] Verify: 1.344064 sec and 1860.029819 ops/s.
+[ECDSA] Keygen: 0.209578 sec and 238.574346 ops/s.
+[ECDSA] Sign: 2.343295 sec and 1066.873738 ops/s.
+[ECDSA] Verify: 1.525030 sec and 1639.312380 ops/s.
+[RSA-6144] Keygen: 100.768918 sec and 0.496185 ops/s.
+[RSA-6144] Sign: 40.317336 sec and 62.008066 ops/s.
+[RSA-6144] Verify: 0.427144 sec and 5852.829723 ops/s.
+Finishing all test after 141.513803 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.285087 sec and 175.385138 ops/s.
+[QTESLA-P3] Sign: 6.204628 sec and 402.925058 ops/s.
+[QTESLA-P3] Verify: 1.369582 sec and 1825.374540 ops/s.
+[ECDSA] Keygen: 0.208316 sec and 240.019869 ops/s.
+[ECDSA] Sign: 2.326903 sec and 1074.389387 ops/s.
+[ECDSA] Verify: 1.506315 sec and 1659.679687 ops/s.
+[RSA-6144] Keygen: 131.148527 sec and 0.381247 ops/s.
+[RSA-6144] Sign: 40.065342 sec and 62.398069 ops/s.
+[RSA-6144] Verify: 0.415546 sec and 6016.185435 ops/s.
+Finishing all test after 171.629796 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.305976 sec and 163.411683 ops/s.
+[QTESLA-P3] Sign: 6.266277 sec and 398.960988 ops/s.
+[QTESLA-P3] Verify: 1.388451 sec and 1800.568172 ops/s.
+[ECDSA] Keygen: 0.211257 sec and 236.678569 ops/s.
+[ECDSA] Sign: 2.351765 sec and 1063.031205 ops/s.
+[ECDSA] Verify: 1.530028 sec and 1633.957423 ops/s.
+[RSA-6144] Keygen: 106.831646 sec and 0.468026 ops/s.
+[RSA-6144] Sign: 40.045233 sec and 62.429403 ops/s.
+[RSA-6144] Verify: 0.415888 sec and 6011.229321 ops/s.
+Finishing all test after 147.293154 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.288595 sec and 173.253055 ops/s.
+[QTESLA-P3] Sign: 6.250659 sec and 399.957844 ops/s.
+[QTESLA-P3] Verify: 1.355161 sec and 1844.799643 ops/s.
+[ECDSA] Keygen: 0.209220 sec and 238.982694 ops/s.
+[ECDSA] Sign: 2.346729 sec and 1065.312702 ops/s.
+[ECDSA] Verify: 1.516466 sec and 1648.569614 ops/s.
+[RSA-6144] Keygen: 102.670592 sec and 0.486994 ops/s.
+[RSA-6144] Sign: 39.875171 sec and 62.695656 ops/s.
+[RSA-6144] Verify: 0.417775 sec and 5984.083549 ops/s.
+Finishing all test after 142.963891 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.291909 sec and 171.286129 ops/s.
+[QTESLA-P3] Sign: 6.382633 sec and 391.687854 ops/s.
+[QTESLA-P3] Verify: 1.350245 sec and 1851.515511 ops/s.
+[ECDSA] Keygen: 0.209880 sec and 238.230971 ops/s.
+[ECDSA] Sign: 2.349877 sec and 1063.885418 ops/s.
+[ECDSA] Verify: 1.530876 sec and 1633.051501 ops/s.
+[RSA-6144] Keygen: 118.081183 sec and 0.423437 ops/s.
+[RSA-6144] Sign: 39.958273 sec and 62.565266 ops/s.
+[RSA-6144] Verify: 0.416435 sec and 6003.341246 ops/s.
+Finishing all test after 158.456333 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.313748 sec and 159.363383 ops/s.
+[QTESLA-P3] Sign: 6.190456 sec and 403.847477 ops/s.
+[QTESLA-P3] Verify: 1.340429 sec and 1865.075109 ops/s.
+[ECDSA] Keygen: 0.208833 sec and 239.425785 ops/s.
+[ECDSA] Sign: 2.330967 sec and 1072.516170 ops/s.
+[ECDSA] Verify: 1.509026 sec and 1656.698232 ops/s.
+[RSA-6144] Keygen: 114.021796 sec and 0.438513 ops/s.
+[RSA-6144] Sign: 39.970545 sec and 62.546058 ops/s.
+[RSA-6144] Verify: 0.416424 sec and 6003.502791 ops/s.
+Finishing all test after 154.409198 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.288070 sec and 173.569090 ops/s.
+[QTESLA-P3] Sign: 6.371508 sec and 392.371783 ops/s.
+[QTESLA-P3] Verify: 1.357555 sec and 1841.545810 ops/s.
+[ECDSA] Keygen: 0.212904 sec and 234.847657 ops/s.
+[ECDSA] Sign: 2.348348 sec and 1064.577991 ops/s.
+[ECDSA] Verify: 1.522789 sec and 1641.723978 ops/s.
+[RSA-6144] Keygen: 105.157261 sec and 0.475478 ops/s.
+[RSA-6144] Sign: 40.260074 sec and 62.096260 ops/s.
+[RSA-6144] Verify: 0.418343 sec and 5975.953162 ops/s.
+Finishing all test after 145.836151 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.293729 sec and 170.225173 ops/s.
+[QTESLA-P3] Sign: 6.348912 sec and 393.768270 ops/s.
+[QTESLA-P3] Verify: 1.380764 sec and 1810.591182 ops/s.
+[ECDSA] Keygen: 0.210124 sec and 237.954174 ops/s.
+[ECDSA] Sign: 2.418911 sec and 1033.522945 ops/s.
+[ECDSA] Verify: 1.543799 sec and 1619.381378 ops/s.
+[RSA-6144] Keygen: 128.055804 sec and 0.390455 ops/s.
+[RSA-6144] Sign: 40.230088 sec and 62.142544 ops/s.
+[RSA-6144] Verify: 0.430094 sec and 5812.676315 ops/s.
+Finishing all test after 168.716422 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.280646 sec and 178.160333 ops/s.
+[QTESLA-P3] Sign: 6.133847 sec and 407.574530 ops/s.
+[QTESLA-P3] Verify: 1.358813 sec and 1839.841032 ops/s.
+[ECDSA] Keygen: 0.209373 sec and 238.808798 ops/s.
+[ECDSA] Sign: 2.375059 sec and 1052.605479 ops/s.
+[ECDSA] Verify: 1.547688 sec and 1615.312390 ops/s.
+[RSA-6144] Keygen: 105.647753 sec and 0.473271 ops/s.
+[RSA-6144] Sign: 40.117984 sec and 62.316193 ops/s.
+[RSA-6144] Verify: 0.424913 sec and 5883.555014 ops/s.
+Finishing all test after 146.191033 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.277098 sec and 180.441771 ops/s.
+[QTESLA-P3] Sign: 6.290997 sec and 397.393319 ops/s.
+[QTESLA-P3] Verify: 1.345686 sec and 1857.788575 ops/s.
+[ECDSA] Keygen: 0.209312 sec and 238.878163 ops/s.
+[ECDSA] Sign: 2.335009 sec and 1070.659749 ops/s.
+[ECDSA] Verify: 1.514035 sec and 1651.217316 ops/s.
+[RSA-6144] Keygen: 103.095200 sec and 0.484989 ops/s.
+[RSA-6144] Sign: 40.090506 sec and 62.358904 ops/s.
+[RSA-6144] Verify: 0.416873 sec and 5997.034014 ops/s.
+Finishing all test after 143.603019 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.294522 sec and 169.766578 ops/s.
+[QTESLA-P3] Sign: 6.220767 sec and 401.879687 ops/s.
+[QTESLA-P3] Verify: 1.363762 sec and 1833.164890 ops/s.
+[ECDSA] Keygen: 0.209869 sec and 238.244232 ops/s.
+[ECDSA] Sign: 2.349644 sec and 1063.991103 ops/s.
+[ECDSA] Verify: 1.520632 sec and 1644.052973 ops/s.
+[RSA-6144] Keygen: 104.616484 sec and 0.477936 ops/s.
+[RSA-6144] Sign: 40.247107 sec and 62.116266 ops/s.
+[RSA-6144] Verify: 0.415244 sec and 6020.558559 ops/s.
+Finishing all test after 145.279273 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.321022 sec and 155.752549 ops/s.
+[QTESLA-P3] Sign: 6.290808 sec and 397.405232 ops/s.
+[QTESLA-P3] Verify: 1.371451 sec and 1822.886986 ops/s.
+[ECDSA] Keygen: 0.210870 sec and 237.113418 ops/s.
+[ECDSA] Sign: 2.393570 sec and 1044.464882 ops/s.
+[ECDSA] Verify: 1.534146 sec and 1629.571035 ops/s.
+[RSA-6144] Keygen: 115.199705 sec and 0.434029 ops/s.
+[RSA-6144] Sign: 40.147255 sec and 62.270758 ops/s.
+[RSA-6144] Verify: 0.423750 sec and 5899.709396 ops/s.
+Finishing all test after 155.771122 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.300807 sec and 166.219273 ops/s.
+[QTESLA-P3] Sign: 6.357486 sec and 393.237200 ops/s.
+[QTESLA-P3] Verify: 1.395895 sec and 1790.966259 ops/s.
+[ECDSA] Keygen: 0.209376 sec and 238.804719 ops/s.
+[ECDSA] Sign: 2.345056 sec and 1066.072813 ops/s.
+[ECDSA] Verify: 1.519785 sec and 1644.969081 ops/s.
+[RSA-6144] Keygen: 94.531252 sec and 0.528926 ops/s.
+[RSA-6144] Sign: 40.419988 sec and 61.850588 ops/s.
+[RSA-6144] Verify: 0.417372 sec and 5989.857111 ops/s.
+Finishing all test after 135.369000 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.279786 sec and 178.707790 ops/s.
+[QTESLA-P3] Sign: 6.221386 sec and 401.839706 ops/s.
+[QTESLA-P3] Verify: 1.345989 sec and 1857.370321 ops/s.
+[ECDSA] Keygen: 0.215914 sec and 231.573670 ops/s.
+[ECDSA] Sign: 2.341815 sec and 1067.547819 ops/s.
+[ECDSA] Verify: 1.510821 sec and 1654.729334 ops/s.
+[RSA-6144] Keygen: 113.282046 sec and 0.441376 ops/s.
+[RSA-6144] Sign: 40.130982 sec and 62.296009 ops/s.
+[RSA-6144] Verify: 0.427659 sec and 5845.778522 ops/s.
+Finishing all test after 153.841077 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.270345 sec and 184.948880 ops/s.
+[QTESLA-P3] Sign: 6.341425 sec and 394.233146 ops/s.
+[QTESLA-P3] Verify: 1.358426 sec and 1840.365119 ops/s.
+[ECDSA] Keygen: 0.209711 sec and 238.422998 ops/s.
+[ECDSA] Sign: 2.359907 sec and 1059.363606 ops/s.
+[ECDSA] Verify: 1.527535 sec and 1636.624007 ops/s.
+[RSA-6144] Keygen: 112.528695 sec and 0.444331 ops/s.
+[RSA-6144] Sign: 40.202204 sec and 62.185645 ops/s.
+[RSA-6144] Verify: 0.416468 sec and 6002.860097 ops/s.
+Finishing all test after 153.147826 sec.

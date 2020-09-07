@@ -1,0 +1,195 @@
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.191302 sec and 261.366761 ops/s.
+[QTESLA-P3] Sign: 3.709957 sec and 673.862322 ops/s.
+[QTESLA-P3] Verify: 0.931337 sec and 2684.311955 ops/s.
+Finishing all test after 4.832842 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.194721 sec and 256.777039 ops/s.
+[QTESLA-P3] Sign: 3.650161 sec and 684.901380 ops/s.
+[QTESLA-P3] Verify: 0.927582 sec and 2695.180128 ops/s.
+Finishing all test after 4.772736 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.195307 sec and 256.006563 ops/s.
+[QTESLA-P3] Sign: 3.669759 sec and 681.243683 ops/s.
+[QTESLA-P3] Verify: 0.920698 sec and 2715.331408 ops/s.
+Finishing all test after 4.786014 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.188653 sec and 265.036208 ops/s.
+[QTESLA-P3] Sign: 3.666697 sec and 681.812537 ops/s.
+[QTESLA-P3] Verify: 0.937408 sec and 2666.929144 ops/s.
+Finishing all test after 4.793006 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.180438 sec and 277.103795 ops/s.
+[QTESLA-P3] Sign: 3.679929 sec and 679.360974 ops/s.
+[QTESLA-P3] Verify: 0.913577 sec and 2736.497401 ops/s.
+Finishing all test after 4.774204 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.186760 sec and 267.723013 ops/s.
+[QTESLA-P3] Sign: 3.694842 sec and 676.618988 ops/s.
+[QTESLA-P3] Verify: 0.969644 sec and 2578.265019 ops/s.
+Finishing all test after 4.851505 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.183240 sec and 272.866636 ops/s.
+[QTESLA-P3] Sign: 3.688731 sec and 677.739816 ops/s.
+[QTESLA-P3] Verify: 0.968324 sec and 2581.781258 ops/s.
+Finishing all test after 4.840582 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.189917 sec and 263.272452 ops/s.
+[QTESLA-P3] Sign: 3.598866 sec and 694.663266 ops/s.
+[QTESLA-P3] Verify: 0.980970 sec and 2548.498160 ops/s.
+Finishing all test after 4.770034 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.181138 sec and 276.033306 ops/s.
+[QTESLA-P3] Sign: 3.720543 sec and 671.944902 ops/s.
+[QTESLA-P3] Verify: 0.923821 sec and 2706.152030 ops/s.
+Finishing all test after 4.825742 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.184973 sec and 270.309022 ops/s.
+[QTESLA-P3] Sign: 3.629203 sec and 688.856554 ops/s.
+[QTESLA-P3] Verify: 0.939698 sec and 2660.429256 ops/s.
+Finishing all test after 4.754127 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.195825 sec and 255.330195 ops/s.
+[QTESLA-P3] Sign: 3.665182 sec and 682.094347 ops/s.
+[QTESLA-P3] Verify: 0.935132 sec and 2673.418610 ops/s.
+Finishing all test after 4.796383 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.172681 sec and 289.551897 ops/s.
+[QTESLA-P3] Sign: 3.675055 sec and 680.261879 ops/s.
+[QTESLA-P3] Verify: 0.987818 sec and 2530.829960 ops/s.
+Finishing all test after 4.835828 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.167063 sec and 299.289151 ops/s.
+[QTESLA-P3] Sign: 3.744933 sec and 667.568705 ops/s.
+[QTESLA-P3] Verify: 0.975478 sec and 2562.845033 ops/s.
+Finishing all test after 4.887739 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.211468 sec and 236.442147 ops/s.
+[QTESLA-P3] Sign: 3.710413 sec and 673.779359 ops/s.
+[QTESLA-P3] Verify: 0.967227 sec and 2584.709342 ops/s.
+Finishing all test after 4.889357 sec.
+
+===========================================================================================
+Testing signature scheme qTESLA, system qTesla-p-III, tests for 50 iterations @ 50 signings.
+===========================================================================================
+
+CRYPTO_PUBLICKEY_BYTES: 38432
+CRYPTO_SECRETKEY_BYTES: 12352
+CRYPTO_SIGNATURE_BYTES: 5664
+
+[QTESLA-P3] Keygen: 0.190916 sec and 261.894873 ops/s.
+[QTESLA-P3] Sign: 3.748034 sec and 667.016446 ops/s.
+[QTESLA-P3] Verify: 0.997958 sec and 2505.116183 ops/s.
+Finishing all test after 4.937178 sec.

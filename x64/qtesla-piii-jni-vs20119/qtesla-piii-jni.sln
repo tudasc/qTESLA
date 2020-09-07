@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtesla-piii-jni", "qtesla-piii-jni\qtesla-piii-jni.vcxproj", "{A4703E0E-C396-4477-B1EA-327908C8112C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtesla-win-lib", "qtesla-win-lib\qtesla-win-lib.vcxproj", "{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qtesla-win", "qtesla-win-lib\qtesla-win.vcxproj", "{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67} = {D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Debug|x64.ActiveCfg = Debug|x64
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Debug|x64.Build.0 = Debug|x64
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Debug|x86.ActiveCfg = Debug|Win32
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Debug|x86.Build.0 = Debug|Win32
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Release|x64.ActiveCfg = Release|x64
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Release|x64.Build.0 = Release|x64
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Release|x86.ActiveCfg = Release|Win32
+		{A4703E0E-C396-4477-B1EA-327908C8112C}.Release|x86.Build.0 = Release|Win32
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Debug|x64.ActiveCfg = Debug|x64
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Debug|x64.Build.0 = Debug|x64
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Debug|x86.ActiveCfg = Debug|Win32
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Debug|x86.Build.0 = Debug|Win32
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Release|x64.ActiveCfg = Release|x64
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Release|x64.Build.0 = Release|x64
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Release|x86.ActiveCfg = Release|Win32
+		{D4BE12D9-6B7E-4D0A-B580-AC4D10A61E67}.Release|x86.Build.0 = Release|Win32
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Debug|x64.ActiveCfg = Debug|x64
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Debug|x64.Build.0 = Debug|x64
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Debug|x86.ActiveCfg = Debug|Win32
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Debug|x86.Build.0 = Debug|Win32
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Release|x64.ActiveCfg = Release|x64
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Release|x64.Build.0 = Release|x64
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Release|x86.ActiveCfg = Release|Win32
+		{99893ED6-D7C9-46E9-95D8-E87C8B3700EC}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {33E6F578-2BCA-490E-8EDA-E9391914829F}
+	EndGlobalSection
+EndGlobal
