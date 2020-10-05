@@ -31,7 +31,7 @@ public final class QTESLAPrivateKey  extends QTESLAKey implements PrivateKey{
      */
 	@Override
 	public String getAlgorithm() {
-		return "QTESLA";
+		return "qTESLA-P-III";
 	}
 
     /**
@@ -53,19 +53,6 @@ public final class QTESLAPrivateKey  extends QTESLAKey implements PrivateKey{
      */
 	@Override
 	public String getFormat() {
-		return null;
-	}
-
-    /**
-     * Returns the key in its primary encoding format, or null
-     * if this key does not support encoding.
-     *
-     * @return the encoded key, or null if the key does not support
-     * encoding.
-     */
-	@Override
-	public byte[] getEncoded() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

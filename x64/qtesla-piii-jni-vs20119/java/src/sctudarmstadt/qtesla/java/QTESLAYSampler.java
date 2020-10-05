@@ -177,11 +177,11 @@ public class QTESLAYSampler {
 		
 		int i = 0;
 		int position = 0;
+		int numberOfBlock = parameter.n;		
 		int numberOfByte = (parameter.bBit + 1 + 7) / 8;
-		int numberOfBlock = parameter.n;
-		byte[] buffer = new byte[parameter.n * numberOfByte + 1];
-		
 		short dualModeSampler = (short) (nonce << 8);
+		
+		byte[] buffer = new byte[parameter.n * numberOfByte + 1];		
 		
 		FederalInformationProcessingStandard202.customizableSecureHashAlgorithmKECCAK256Simple (				
 			buffer, 0, parameter.n * numberOfByte, dualModeSampler++, seed, seedOffset, QTESLAParameter.RANDOM			
@@ -189,7 +189,9 @@ public class QTESLAYSampler {
 		
 		while (i < parameter.n) {
 			
-			if (position > numberOfBlock * numberOfByte) {				
+			if (position > numberOfBlock * numberOfByte) {	
+				
+				
 				numberOfBlock =
 					FederalInformationProcessingStandard202.SECURE_HASH_ALGORITHM_KECCAK_256_RATE /
 						((parameter.bBit + 1 + 7) / 8);
@@ -214,7 +216,8 @@ public class QTESLAYSampler {
 			
 			position += numberOfByte;
 			
-		}
+		}	
+
 	}
 	
 	public void sampleY (long[] Y, final byte[] seed, int seedOffset, int nonce) {

@@ -14,6 +14,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include "fips202.h"
+#include <stdio.h>
 
 #define NROUNDS 24
 #define ROL(a, offset) ((a << offset) ^ (a >> (64-offset)))
@@ -560,9 +561,13 @@ void cshake256_simple(unsigned char *output, unsigned long long outlen, uint16_t
 
   cshake256_simple_absorb(s, cstm, in, inlen);
 
+  cshake256_simple_absorb(s, cstm, in, inlen);
+
   /* Squeeze output */
   keccak_squeezeblocks(output, outlen/SHAKE256_RATE, s, SHAKE256_RATE);
   output += (outlen/SHAKE256_RATE)*SHAKE256_RATE;
+
+
 
   if(outlen%SHAKE256_RATE)
   {
@@ -570,4 +575,6 @@ void cshake256_simple(unsigned char *output, unsigned long long outlen, uint16_t
     for (i = 0; i < outlen%SHAKE256_RATE; i++)
       output[i] = t[i];
   }
+
+
 }

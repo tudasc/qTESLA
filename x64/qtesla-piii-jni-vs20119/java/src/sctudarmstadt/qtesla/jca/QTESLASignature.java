@@ -16,6 +16,11 @@ public final class QTESLASignature extends Signature {
 private
 	byte[] _digist_buffer = {};
 	
+	
+	
+	private PublicKey gen_pub; // generic key
+	private PrivateKey gen_priv; // generic key
+	
 	private QTESLAPublicKey pub;
 	private QTESLAPrivateKey priv;
 	private qTeslaTestJNI jniwrap;
@@ -34,6 +39,8 @@ private
 		sig_len = new qTeslaTestJNI().getSignatureSize_Wrapper();
 		sign_threads = 1;
 		this.jniwrap = new qTeslaTestJNI(sign_threads);
+		gen_pub = null;
+		pub = null;
 	}
 	
 	public void changeParallelity(int t) {
@@ -54,7 +61,13 @@ private
 		
 		catch (ClassCastException cce) 
 		{ 
-			throw new InvalidKeyException("Public key not from type QTESLAPublicKey"); 
+			try {
+				this.gen_pub = publicKey;
+			}
+			
+			catch (Exception e) {
+				throw new InvalidKeyException("Public key not from type QTESLAPublicKey"); 
+			}
 		} 		
 	}
 	
@@ -71,7 +84,12 @@ private
 		
 		catch (ClassCastException cce) 
 		{ 
-			throw new InvalidKeyException("Private key not from type QTESLAPrivateKey"); 
+			try {
+				this.gen_priv = privateKey;
+			}
+			catch(Exception e) {
+				throw new InvalidKeyException("Private key not from type QTESLAPrivateKey"); 
+			}
 		}
 		
 	}
@@ -106,8 +124,13 @@ private
 	 */
 	@Override
 	protected byte[] engineSign() throws SignatureException {
-		
-		byte[] sigbytes = this.jniwrap.cryptoSign_Wrapper( _digist_buffer, priv.getBytesOfKey());		
+		byte[] sigbytes = new byte[1];
+		if(priv!=null)
+			sigbytes = this.jniwrap.cryptoSign_Wrapper( _digist_buffer, priv.getEncoded());	
+		else if(gen_priv!=null) {
+			byte[] byties = gen_priv.getEncoded(); 
+			sigbytes = this.jniwrap.cryptoSign_Wrapper( _digist_buffer, byties);	
+		}
 		
 		// Set the internal state to initialize
 		_digist_buffer = new byte[0];
@@ -141,7 +164,13 @@ private
 		System.arraycopy(_digist_buffer, 0, temp_bytes, this.sig_len, check_mess_len);
 		sigbytes = temp_bytes;
 		
-		byte[] rec_message = this.jniwrap.cryptoVerify_Wrapper( sigbytes, check_mess_len, pub.getBytesOfKey());	
+		byte[] rec_message = new byte[1];
+		if(pub!=null)
+			rec_message = this.jniwrap.cryptoVerify_Wrapper( sigbytes, check_mess_len, pub.getBytesOfKey());
+		else if(gen_pub!=null) {
+			byte[] byties = gen_pub.getEncoded(); 
+			rec_message = this.jniwrap.cryptoVerify_Wrapper( sigbytes, check_mess_len, byties);
+		}
 		
 		// Check if messages are equal		
 		try {

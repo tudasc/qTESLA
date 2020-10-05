@@ -51,13 +51,11 @@ public class QTESLAPack {
 			byte[] privateKey, final int[] secretPolynomial, final int[] errorPolynomial,
 			final byte[] seed, int seedOffset, byte[] hashPrivateKey
 			
-		) {		
-		
-			int j = 0;
+		) {	
 			
 			  for (int i=0; i < parameter.n; i++) {
 				  privateKey[i] = (byte) secretPolynomial[i];
-			  }
+			  }			  
 			  
 			  int skoffset = parameter.n;
 			  for(int k=0; k < parameter.k; k++) {
@@ -73,7 +71,7 @@ public class QTESLAPack {
 			
 			// memcpy(&sk[PARAM_K*PARAM_N + 2*CRYPTO_SEEDBYTES], hash_pk, HM_BYTES);
 			System.arraycopy (					
-					hashPrivateKey, 0, privateKey, parameter.n * parameter.k + QTESLAParameter.SEED * 2+ skoffset, parameter.h				
+					hashPrivateKey, 0, privateKey, parameter.n * parameter.k + 2*QTESLAParameter.SEED + skoffset, QTESLAParameter.MESSAGE				
 				);			
 		}
 	
@@ -135,6 +133,7 @@ public class QTESLAPack {
 	public void encodePublicKey_MB (byte[] publicKey, final int[] T, final byte[] seedA, int seedAOffset) {		
 		int j = 0;
 		int temp;
+		
 		for (int i = 0; i < parameter.n * parameter.k * parameter.qLogarithm / Integer.SIZE; i += 15) {
 		    temp = ( T[j+ 0]        | (T[j+ 1] << 30));
 		    Common.store32 (	 publicKey, Integer.SIZE / Byte.SIZE * (i + 0), temp);
@@ -179,17 +178,10 @@ public class QTESLAPack {
 		    Common.store32 (	 publicKey, Integer.SIZE / Byte.SIZE * (i + 13), temp);
 		    
 		    temp = ((T[j+14] >> 28) | (T[j+15] <<  2));		    
-		    Common.store32 (	 publicKey, Integer.SIZE / Byte.SIZE * (i + 14), temp);				
-				
-				//Common.store32 (						
-				//	publicKey, Integer.SIZE / Byte.SIZE * (i + index),
-				//	(int) ((T[j + index] >>> index) | (T[j + index + 1] << (parameter.qLogarithm - index)))					
-				//);				
+		    Common.store32 (	 publicKey, Integer.SIZE / Byte.SIZE * (i + 14), temp);			
 			
 			j += 16;				
 		}
-			
-
 		
 		System.arraycopy (			
 			seedA, seedAOffset, publicKey, parameter.n * parameter.k * parameter.qLogarithm / Byte.SIZE, QTESLAParameter.SEED

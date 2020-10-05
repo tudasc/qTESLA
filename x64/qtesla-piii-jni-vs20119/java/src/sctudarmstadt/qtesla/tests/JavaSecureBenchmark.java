@@ -30,7 +30,6 @@ import java.util.concurrent.CyclicBarrier;
 import sctudarmstadt.qtesla.java.Common;
 import sctudarmstadt.qtesla.java.Logger;
 import sctudarmstadt.qtesla.jca.QTESLASignature;
-import sctudarmstadt.qtesla.jca.QTESLAKeyPairGenerator;
 import sctudarmstadt.qtesla.javajca.QTESLAJavaProvider;
 //import sctudarmstadt.qtesla.javajca.QTESLASignature;
 import sctudarmstadt.qtesla.jca.QTESLAProvider;
@@ -50,14 +49,7 @@ public class JavaSecureBenchmark {
 	}
 
 	private static void testKeygenPerformance(int inoruns, int inosignsperrun, KeyPair[] kepas) throws NoSuchAlgorithmException, IOException {
-		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("QTESLA");		
-		// Required cast to employ the parallelization for C
-		if(_provi.equals("QTESLAProvider")) {
-			QTESLAKeyPairGenerator tkeyGenerator = (QTESLAKeyPairGenerator)keyGenerator;
-			tkeyGenerator.changeParallelity(Logger.no_of_threads);
-			System.out.println("Setting global threads to " + Logger.no_of_threads);
-			keyGenerator = tkeyGenerator;
-		}		
+		KeyPairGenerator keyGenerator = KeyPairGenerator.getInstance("QTESLA");
 		
 		//KeyPair peenee = keyGenerator.generateKeyPair();
 		
@@ -181,9 +173,6 @@ public class JavaSecureBenchmark {
         // Second run ECDSA
         if (Logger.do_ecdsa)
         {
-			timeOfGeneratingKeyPair = new double[timeOfTest * signsperrun];
-			timeOfSigning = new double[timeOfTest * signsperrun];
-			timeOfVerifying = new double[timeOfTest * signsperrun];
 	        for (int round = 0; round < inoruns; round++) {  
 	    		long startGeneratingKeyPairTimeNano	= System.nanoTime();
 	    		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC");
@@ -212,8 +201,8 @@ public class JavaSecureBenchmark {
 	    			long endVerifyingTimeNano1		= System.nanoTime();
 	        		
 	    			// 1E-6 converts to Milliseconds
-	                timeOfSigning[round*inoruns + signnum] = (endSigningTimeNano - startSigningTimeNano) * 1E-6;
-	                timeOfVerifying[round*inoruns + signnum] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) * 1E-6;
+	                timeOfSigning[round*inosignsperrun + signnum] = (endSigningTimeNano - startSigningTimeNano) * 1E-6;
+	                timeOfVerifying[round*inosignsperrun + signnum] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) * 1E-6;
 	        	}
 	        	timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) * 1E-6;
 	        }
@@ -232,9 +221,6 @@ public class JavaSecureBenchmark {
      // RSA
      		if(Logger.do_rsa)
      		{
-				timeOfGeneratingKeyPair = new double[timeOfTest * signsperrun];
-				timeOfSigning = new double[timeOfTest * signsperrun];
-				timeOfVerifying = new double[timeOfTest * signsperrun];
      	        for (int round = 0; round < inoruns; round++) {    
      	        	long startGeneratingKeyPairTimeNano	= System.nanoTime();
      			        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
@@ -262,8 +248,8 @@ public class JavaSecureBenchmark {
      	    			long endVerifyingTimeNano1		= System.nanoTime();
      	    			
      	    			// 1E-6 converts to Milliseconds
-     	                timeOfSigning[round*inoruns + signnum] = (endSigningTimeNano - startSigningTimeNano) * 1E-6;
-     	                timeOfVerifying[round*inoruns + signnum] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) * 1E-6;
+     	                timeOfSigning[round*inosignsperrun + signnum] = (endSigningTimeNano - startSigningTimeNano) * 1E-6;
+     	                timeOfVerifying[round*inosignsperrun + signnum] = (endVerifyingTimeNano1 - startVerifyingTimeNano1) * 1E-6;
      	            }
      	            timeOfGeneratingKeyPair[round] = (endGeneratingKeyPairTimeNano - startGeneratingKeyPairTimeNano) * 1E-6;
      	        }      

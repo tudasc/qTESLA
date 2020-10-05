@@ -9,6 +9,9 @@
 package sctudarmstadt.qtesla.javajca;
 
 import sctudarmstadt.qtesla.java.QTESLA;
+import sctudarmstadt.qtesla.jca.QTESLAPrivateKey;
+import sctudarmstadt.qtesla.jca.QTESLAPublicKey;
+
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
@@ -22,7 +25,6 @@ import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.SignatureSpi;
 import java.security.spec.AlgorithmParameterSpec;
-import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -46,6 +48,9 @@ public final class QTESLASignature extends SignatureSpi {
 	 * The Private Key of the Identity Whose Signature Will be Generated
 	 */
 	private QTESLAPrivateKey privateKey;
+	
+	private PublicKey gen_pub; // generic key
+	private PrivateKey gen_priv; // generic key
 	
 	/**
 	 * The Source of Randomness
@@ -111,19 +116,24 @@ public final class QTESLASignature extends SignatureSpi {
 	
 	@Override
 	protected void engineInitSign (PrivateKey privateKey, SecureRandom random) throws InvalidKeyException {
+		try { 
+			this.privateKey = (QTESLAPrivateKey) privateKey;
+		} 
 		
-		if (!(privateKey instanceof QTESLAPrivateKey)) {
-			
-			throw new InvalidKeyException ("The Input Key Is Not A qTESLA Private Key");
-			
-		}
+		catch (ClassCastException cce) 
+		{ 
+			try {
+				this.gen_priv = privateKey;
+			}
+			catch(Exception e) {
+				throw new InvalidKeyException("Private key not from type QTESLAPrivateKey"); 
+			}
+		}		
 		
-		this.privateKey = (QTESLAPrivateKey) privateKey;
-		this.parameterSet = ((QTESLAPrivateKey) privateKey).getAlgorithm();
-		this.random = random;
-		//this.qTESLA = new QTESLA (this.parameterSet);
-		
-	}
+		this.parameterSet = privateKey.getAlgorithm();
+		this.random = random;		
+	}	
+
 	
 	@Override
 	protected void engineInitSign (PrivateKey privateKey) throws InvalidKeyException {
@@ -135,17 +145,20 @@ public final class QTESLASignature extends SignatureSpi {
 	@Override
 	protected void engineInitVerify (PublicKey publicKey) throws InvalidKeyException {
 		
-		if (!(publicKey instanceof QTESLAPublicKey)) {
-			
-			throw new InvalidKeyException ("The Input Key Is Not A qTESLA Public Key");
-			
-		}
+		try { 
+			this.publicKey = (QTESLAPublicKey) publicKey;
+		} 
 		
-		this.publicKey = (QTESLAPublicKey) publicKey;
-		this.parameterSet = ((QTESLAPublicKey) publicKey).getAlgorithm();
-		this.random = null;
-		//this.qTESLA = new QTESLA (this.parameterSet);
-		
+		catch (ClassCastException cce) 
+		{ 
+			try {
+				this.gen_pub = publicKey;
+			}
+			
+			catch (Exception e) {
+				throw new InvalidKeyException("Public key not from type QTESLAPublicKey"); 
+			}
+		} 		
 	}
 	
 	@Override
@@ -155,11 +168,18 @@ public final class QTESLASignature extends SignatureSpi {
 		lengthOfSignature[0]	= signatureLength;
 		
 		if (this.parameterSet == "qTESLA-P-I" || this.parameterSet == "qTESLA-P-III") {
+			byte[] keybytes = new byte[1];
+			if(privateKey!=null)
+				keybytes = privateKey.getEncoded();	
+			else if(gen_priv!=null) {
+				keybytes = gen_priv.getEncoded(); 
+			}	
+			
 			
 			try {
 				//qTESLA.signPParallelVersion2 (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.random);
 				//qTESLA.signPParallel (signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], this.privateKey.getEncoded(), this.random);
-				qTESLA.sign_MB(signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], privateKey.getEncoded(), this.random);
+				qTESLA.sign_MB(signature, signatureOffset, lengthOfSignature, this.message, this.messageOffset, this.messageLength[0], keybytes, this.random);
 			
 			} catch (InvalidKeyException | BadPaddingException | IllegalBlockSizeException | NoSuchAlgorithmException
 					| NoSuchPaddingException | ShortBufferException exception) {
@@ -198,7 +218,13 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		engineSign (signature, 0, signature.length);
 		
-		return signature;
+		// Trunc to the Signature length, since C-Code appends whole message to signature array.
+		byte[] c = new byte[ qTESLA.getQTESLAParameter().signatureSize  ];
+		System.arraycopy(signature, 0, c, 0, qTESLA.getQTESLAParameter().signatureSize );	
+		
+		return c;
+		
+		//return signature;
 		
 	}
 	
@@ -207,29 +233,27 @@ public final class QTESLASignature extends SignatureSpi {
 		
 		int success = 0;
 		
-		// Append the message tp the signature
-		byte[] temp_bytes = new byte [qTESLA.getQTESLAParameter().signatureSize + this.message.length];		
-		
+		// Append the message to the signature
+		byte[] temp_bytes = new byte [qTESLA.getQTESLAParameter().signatureSize + this.message.length];	
 		System.arraycopy(signature, 0, temp_bytes, 0, qTESLA.getQTESLAParameter().signatureSize);
 		System.arraycopy(this.message, 0, temp_bytes, qTESLA.getQTESLAParameter().signatureSize, this.message.length);
 		signature = temp_bytes;
-		
-		//System.out.println(Arrays.toString(signature));
-		
 		
 		if (this.parameterSet == "qTESLA-P-I" || this.parameterSet == "qTESLA-P-III") {
 			int messageLength[] = {0};
 			for (int i=0; i < this.message.length; i++) {
 				message[i] = 0;
+			}	
+			
+			byte[] pubbytes = new byte[1];
+			if(publicKey!=null)
+				pubbytes = publicKey.getEncoded();
+			else if(gen_pub!=null) {
+				pubbytes = gen_pub.getEncoded(); 
 			}
 			
 			
-			
-			success = qTESLA.verify_MB (this.message, 0, messageLength, signature, signatureOffset, signatureLength, this.publicKey.getEncoded());
-	        //String s = new String(message, StandardCharsets.UTF_8);
-	        //System.out.println("Output : " + s);
-	        //System.out.flush();
-		
+			success = qTESLA.verify_MB (this.message, 0, messageLength, signature, signatureOffset, signatureLength, pubbytes);
 		}
 		
 		else {

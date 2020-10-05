@@ -3,16 +3,16 @@ set KEYS=50
 set SIGNPR=50
 set THREADS=1
 
-set LOGFILEBASE=logs/logJCAWin-C-09-03-
+set LOGFILEBASE=logs/logJCAWin-C-09-01-
 set FILEIM=%LOGFILEBASE%.mvsc-
 
 
 rem C behind java
 set FILE=%FILEIM%-1T.txt
 echo %FILE%
-FOR /L %%A IN (1,1,%REPS%) DO (
-	java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark %KEYS% %SIGNPR% 1 1 QTESLAProvider >> %FILE%
-)
+rem FOR /L %%A IN (1,1,%REPS%) DO (
+rem 	java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark %KEYS% %SIGNPR% 7 1 QTESLAProvider >> %FILE%
+rem )
 
 set FILE=%FILEIM%-2T.txt
 echo %FILE%
@@ -32,10 +32,10 @@ FOR /L %%A IN (1,1,%REPS%) DO (
 )
 
 rem JAVA behind JAVA
-rem set LOGFILEBASE=logs/logJCAWin-JAVA-09-01-
-rem set FILEIM=%LOGFILEBASE%.mvsc-
-rem set FILE=%FILEIM%-1T.txt
-rem echo %FILE%
-rem FOR /L %%A IN (1,1,%REPS%) DO (
-rem 	java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark %KEYS% %SIGNPR% 1 1 QTESLAJavaProvider >> %FILE%
-rem )
+set LOGFILEBASE=logs/logJCAWin-JAVA-09-01-
+set FILEIM=%LOGFILEBASE%.mvsc-
+set FILE=%FILEIM%-1T.txt
+echo %FILE%
+FOR /L %%A IN (1,1,%REPS%) DO (
+	java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark %KEYS% %SIGNPR% 1 1 QTESLAJavaProvider >> %FILE%
+)

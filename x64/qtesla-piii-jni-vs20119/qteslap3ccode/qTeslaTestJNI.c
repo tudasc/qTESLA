@@ -59,7 +59,7 @@ typedef struct {
 
 unsigned char endflag[1];
 
-#ifdef __linux__
+#ifdef __RRlinux__
 void* crypto_sign_keypair_pthread_perthread(void* params) {
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
 	pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
@@ -246,7 +246,7 @@ JNIEXPORT jint JNICALL Java_sctudarmstadt_qtesla_cwrapper_qTeslaTestJNI_cryptoSi
 	omp_set_num_threads(nt);
 
 	//int ret = crypto_sign_keypair_pthread_wrapper(cPK, cSK, nt);
-	int ret = crypto_sign_keypair( cPK, cSK   );
+	int ret = crypto_sign_keypair_par( cPK, cSK, 0, nt   );
 
 	(*jnienv)->ReleaseByteArrayElements(jnienv, pk, cPK, 0);
 	(*jnienv)->ReleaseByteArrayElements(jnienv, sk, cSK, 0);

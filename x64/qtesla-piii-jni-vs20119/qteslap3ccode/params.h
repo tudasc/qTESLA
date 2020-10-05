@@ -4,10 +4,10 @@
 * Abstract: provably-secure qTESLA parameters
 **************************************************************************************/
 
-#include "reduce.h"
-
 #ifndef PARAMS_H
 #define PARAMS_H
+
+#include "reduce.h"
 
 #define PARAM_N 2048
 #define PARAM_N_LOG 11
@@ -25,9 +25,9 @@
 #define PARAM_H 40
 #define PARAM_D 24
 #define PARAM_GEN_A 180	
-#define PARAM_KEYGEN_BOUND_E 901
+//#define PARAM_KEYGEN_BOUND_E 901
 #define PARAM_E PARAM_KEYGEN_BOUND_E
-#define PARAM_KEYGEN_BOUND_S 901 
+//#define PARAM_KEYGEN_BOUND_S 901
 #define PARAM_S PARAM_KEYGEN_BOUND_S
 //#define PARAM_R2_INVN 513161157
 #define PARAM_R 14237691

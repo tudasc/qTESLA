@@ -6,9 +6,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <omp.h>
 #include <stdio.h>
-
 #include "api.h"
 #include "params.h"
 #include "poly.h"
@@ -18,9 +16,7 @@
 #include "sha3/fips202.h"
 #include "random/random.h"
 
-#ifdef SCOREP
-#include <scorep/SCOREP_User.h>
-#endif
+#include <omp.h>
 
 #ifdef STATS
 unsigned long long rejwctr;
@@ -30,10 +26,9 @@ unsigned long long ctr_sign;
 #endif
 
 
-
 void hash_H(unsigned char *c_bin, poly_k v, const unsigned char *hm)
 { // Hash-based function H to generate c'
-  unsigned char t[PARAM_K*PARAM_N + HM_BYTES];
+  unsigned char t[PARAM_K*PARAM_N + 2*HM_BYTES];
   int32_t mask, cL, temp;
   unsigned int i, k, index;
 
@@ -52,15 +47,15 @@ void hash_H(unsigned char *c_bin, poly_k v, const unsigned char *hm)
       t[index++] = (unsigned char)((temp - cL) >> PARAM_D);
     }
   }  
-  memcpy(&t[PARAM_K*PARAM_N], hm, HM_BYTES);
-  SHAKE(c_bin, CRYPTO_C_BYTES, t, PARAM_K*PARAM_N + HM_BYTES);
+  memcpy(&t[PARAM_K*PARAM_N], hm, 2*HM_BYTES);
+  SHAKE(c_bin, CRYPTO_C_BYTES, t, PARAM_K*PARAM_N + 2*HM_BYTES);
 }
 
 
 static __inline int32_t Abs(int32_t value)
 { // Compute absolute value
 
-    int32_t mask = (value >> (RADIX32-1));
+    int32_t mask = value >> (RADIX32-1);
     return ((mask ^ value) - mask);
 }
 
@@ -107,9 +102,8 @@ static int test_correctness(poly v)
 static int test_z(poly z)
 { // Check bounds for signature vector z during signature verification
   // Returns 0 if valid, otherwise outputs 1 if invalid (rejected)
-  unsigned int i;
   
-  for (i=0; i<PARAM_N; i++) {                                  
+  for (int i=0; i<PARAM_N; i++) {                                  
     if (z[i] < -(PARAM_B-PARAM_S) || z[i] > (PARAM_B-PARAM_S))
       return 1;
   }
@@ -153,69 +147,48 @@ static int check_ES(poly p, unsigned int bound)
 *              - unsigned char *sk: secret key
 * Returns:     0 for successful execution
 **********************************************************/
+int crypto_sign_keypair(unsigned char *pk, unsigned char *sk) {
+	return crypto_sign_keypair_par(pk, sk, 0, 1);
+}
+
 int crypto_sign_keypair_par(unsigned char *pk, unsigned char *sk, int _nonce, int oncestep)
 {
-#ifdef SCOREP
-  SCOREP_USER_REGION_DEFINE(cryptosignkeypair);
-  SCOREP_USER_REGION_BEGIN(cryptosignkeypair, "cryptosignkeypair", SCOREP_USER_REGION_TYPE_COMMON);
-#endif		
-
-  unsigned char randomness[CRYPTO_RANDOMBYTES], randomness_extended[(PARAM_K+3)*CRYPTO_SEEDBYTES];
+  unsigned char randomness[CRYPTO_RANDOMBYTES], randomness_extended[(PARAM_K+3)*CRYPTO_SEEDBYTES], hash_pk[HM_BYTES];
   poly s, s_ntt;
   poly_k e, a, t;
   int k;
   int nonce = _nonce;  // Initialize domain separator for error and secret polynomials
-  int cnt1=0, cnt2=0;
 #ifdef STATS
-  ctr_keygen = 0;
+  ctr_keygen=0;  
 #endif
 
   // Get randomness_extended <- seed_e, seed_s, seed_a, seed_y
   randombytes(randomness, CRYPTO_RANDOMBYTES);
   SHAKE(randomness_extended, (PARAM_K+3)*CRYPTO_SEEDBYTES, randomness, CRYPTO_RANDOMBYTES);
 
-  /*printf("%d %d $d %d %d", randomness[0], randomness[1], randomness[2], randomness[3], randomness[4]);
-  fflush(stdout);
-  int sasa=0;
-  scanf("%i", &sasa);*/
+#pragma omp parallel
+{
+	  nonce = omp_get_thread_num();
 
-//double tstart=omp_get_wtime();
-//double tend=omp_get_wtime();
-
-#pragma omp parallel for
+#pragma omp for
   for (k=0; k<PARAM_K; k++) {
     do {  // Sample the error polynomials
 #ifdef STATS
-		ctr_keygen++;
+  ctr_keygen++;
 #endif
-		cnt1++;
       sample_gauss_poly(&e[k*PARAM_N], &randomness_extended[k*CRYPTO_SEEDBYTES], nonce);
       nonce += oncestep;
-
-		/*tend=omp_get_wtime();
-		if (tend-tstart > 5) {
-			printf("crypto_sign_keypair takes too long. Ending.\n");
-			exit(-2001);
-		}*/
-
-    } while(check_ES(&e[k*PARAM_N], (int)PARAM_KEYGEN_BOUND_E) != 0);
+    } while(check_ES(&e[k*PARAM_N], PARAM_KEYGEN_BOUND_E) != 0); 
   }
+} // End parallel
 
-//tstart=omp_get_wtime();
-
-  do {  // Sample the secret polynomial
+  do {  // Sample the secret polynomial 
 #ifdef STATS
-	  ctr_keygen++;
+  ctr_keygen++;
 #endif
-	  cnt2++;
     sample_gauss_poly(s, &randomness_extended[PARAM_K*CRYPTO_SEEDBYTES], nonce);
     nonce += oncestep;
-		/*tend=omp_get_wtime();
-		if (tend-tstart > 5) {
-			printf("crypto_sign_keypair takes too long. Ending.\n");
-			exit(-2002);
-		}*/
-  } while(check_ES(s, (int)PARAM_KEYGEN_BOUND_S) != 0);
+  } while(check_ES(s, PARAM_KEYGEN_BOUND_S) != 0);
 
   // Generate uniform polynomial "a"
   poly_uniform(a, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
@@ -226,96 +199,10 @@ int crypto_sign_keypair_par(unsigned char *pk, unsigned char *sk, int _nonce, in
     poly_mul(&t[k*PARAM_N], &a[k*PARAM_N], s_ntt);
     poly_add_correct(&t[k*PARAM_N], &t[k*PARAM_N], &e[k*PARAM_N]);
   }
-
   // Pack public and private keys
-  pack_sk(sk, s, e, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
   encode_pk(pk, t, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
-
-#ifdef SCOREP
-  SCOREP_USER_REGION_END(cryptosignkeypair);
-#endif
-
-  //printf("%d \t %d\n", cnt1, cnt2);
-
-  return 0;
-}
-
-int crypto_sign_keypair(unsigned char *pk, unsigned char *sk)
-{
-#ifdef SCOREP
-  SCOREP_USER_REGION_DEFINE(cryptosignkeypair);
-  SCOREP_USER_REGION_BEGIN(cryptosignkeypair, "cryptosignkeypair", SCOREP_USER_REGION_TYPE_COMMON);
-#endif
-
-  unsigned char randomness[CRYPTO_RANDOMBYTES], randomness_extended[(PARAM_K+3)*CRYPTO_SEEDBYTES];
-  poly s, s_ntt;
-  poly_k e, a, t;
-  int nonce = 0;  // Initialize domain separator for error and secret polynomials
-  int cnt1=0, cnt2=0;
-  int k;
-#ifdef STATS
-  ctr_keygen = 0;
-#endif
-
-  // Get randomness_extended <- seed_e, seed_s, seed_a, seed_y
-  randombytes(randomness, CRYPTO_RANDOMBYTES);
-  SHAKE(randomness_extended, (PARAM_K+3)*CRYPTO_SEEDBYTES, randomness, CRYPTO_RANDOMBYTES);
-
-//double tstart=omp_get_wtime();
-//double tend=omp_get_wtime();
-  nonce = 0;
-  int step;
-#pragma omp parallel private (nonce)
-  {
-      nonce = omp_get_thread_num();
-      step = omp_get_num_threads();
-#pragma omp for
-      for (k = 0; k < PARAM_K; k++) {
-
-          do {  // Sample the error polynomials
-#ifdef STATS
-              ctr_keygen++;
-#endif
-              cnt1++;
-              sample_gauss_poly(&e[k * PARAM_N], &randomness_extended[k * CRYPTO_SEEDBYTES], ++nonce);
-          } while (check_ES(&e[k * PARAM_N], (int)PARAM_KEYGEN_BOUND_E) != 0);
-      }
-  }
-
-
-//tstart=omp_get_wtime();
-  
-  do {  // Sample the secret polynomial 
-#ifdef STATS
-	  ctr_keygen++;
-#endif
-	  cnt2++;
-    sample_gauss_poly(s, &randomness_extended[PARAM_K*CRYPTO_SEEDBYTES], ++nonce);
-
-		/*tend=omp_get_wtime();
-		if (tend-tstart > 5) {
-			printf("crypto_sign_keypair takes too long. Ending.\n");
-			exit(-2002);
-		}*/
-  } while(check_ES(s, (int)PARAM_KEYGEN_BOUND_S) != 0);
-
-  // Generate uniform polynomial "a"
-  poly_uniform(a, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
-  poly_ntt(s_ntt, s);
-  
-  // Compute the public key t = as+e
-  for (int k=0; k<PARAM_K; k++) {
-    poly_mul(&t[k*PARAM_N], &a[k*PARAM_N], s_ntt);
-    poly_add_correct(&t[k*PARAM_N], &t[k*PARAM_N], &e[k*PARAM_N]);
-  }
-  
-  // Pack public and private keys
-  pack_sk(sk, s, e, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
-  encode_pk(pk, t, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES]);
-
-#ifdef SCOREP
-  SCOREP_USER_REGION_END(cryptosignkeypair);
-#endif  
+  SHAKE(hash_pk, HM_BYTES, pk, CRYPTO_PUBLICKEYBYTES-CRYPTO_SEEDBYTES);
+  encode_sk(sk, s, e, &randomness_extended[(PARAM_K+1)*CRYPTO_SEEDBYTES], hash_pk);
 
   return 0;
 }
@@ -333,180 +220,111 @@ int crypto_sign_keypair(unsigned char *pk, unsigned char *sk)
 *              - unsigned long long *smlen: signature length*
 * Returns:     0 for successful execution
 ***************************************************************/
-int crypto_sign_org(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
-{    
-  unsigned char c[CRYPTO_C_BYTES], randomness[CRYPTO_SEEDBYTES], randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES];
-  uint32_t pos_list[PARAM_H];
-  int16_t sign_list[PARAM_H];
-  poly y, y_ntt, Sc, z; 
-  poly_k v, Ec, a;
-  unsigned int k;
-  int rsp, nonce = 0;  // Initialize domain separator for sampling y 
-
-#ifdef STATS
-  ctr_sign = 0;
-  rejwctr = 0;
-  rejyzctr = 0;
-#endif
-
-  // Get H(seed_y, r, H(m)) to sample y
-  randombytes(randomness_input+CRYPTO_RANDOMBYTES, CRYPTO_RANDOMBYTES);
-  memcpy(randomness_input, &sk[CRYPTO_SECRETKEYBYTES-CRYPTO_SEEDBYTES], CRYPTO_SEEDBYTES);
-  SHAKE(randomness_input+CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES, HM_BYTES, m, mlen);
-  SHAKE(randomness, CRYPTO_SEEDBYTES, randomness_input, CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES);
-  
-  poly_uniform(a, &sk[CRYPTO_SECRETKEYBYTES-2*CRYPTO_SEEDBYTES]);
-
-	double tstart=omp_get_wtime();
-	double tend=omp_get_wtime();
-
-  while (1) {
-#ifdef STATS
-	  ctr_sign++;
-#endif
-		tend=omp_get_wtime(); 
-		if (tend-tstart > 5) {
-			printf("crypto_sign takes too long. Ending.\n");
-			exit(-2003);
-		}
-
-    sample_y(y, randomness, ++nonce);           // Sample y uniformly at random from [-B,B]
-    poly_ntt (y_ntt, y);
-    for (k=0; k<PARAM_K; k++)
-      poly_mul(&v[k*PARAM_N], &a[k*PARAM_N], y_ntt);
-  
-    hash_H(c, v, randomness_input+CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES);
-    encode_c(pos_list, sign_list, c);           // Generate c = Enc(c'), where c' is the hashing of v together with m
-    sparse_mul8(Sc, sk, pos_list, sign_list);
-    poly_add(z, y, Sc);                         // Compute z = y + sc
-    
-    if (test_rejection(z) != 0) {               // Rejection sampling
-#ifdef STATS
-		rejyzctr++;
-#endif
-      continue;
-    }        
- 
-    for (k=0; k<PARAM_K; k++) {
-      sparse_mul8(&Ec[k*PARAM_N], sk+(sizeof(int8_t)*PARAM_N*(k+1)), pos_list, sign_list);
-      poly_sub(&v[k*PARAM_N], &v[k*PARAM_N], &Ec[k*PARAM_N]);
-      rsp = test_correctness(&v[k*PARAM_N]);
-      if (rsp != 0) {
-        break;
-      }
-    }
-	if (rsp != 0) {
-#ifdef STATS
-		rejwctr++;
-#endif
-		continue;
-	}
-
-    // Copy message to signature package, and pack signature
-    for (unsigned long long i = 0; i < mlen; i++)
-       sm[CRYPTO_BYTES+i] = m[i];
-
-    *smlen = CRYPTO_BYTES + mlen; 
-    encode_sig(sm, c, z);
-
-    return 0;
-  }
-}
-
-
-
-
-
-
 int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned char *m, unsigned long long mlen, const unsigned char* sk)
 {
-#ifdef SCOREP
-  SCOREP_USER_REGION_DEFINE(cryptosign);
-  SCOREP_USER_REGION_BEGIN(cryptosign, "cryptosign", SCOREP_USER_REGION_TYPE_COMMON);
-#endif		
+	  /*FILE* fp = fopen("randomness_input.txt", "w");
+	  for(int g=0; g < CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+2*HM_BYTES; g++) {
+		  fprintf(fp, "%d\n", (int)(char)randomness_input[g]);
+	  }
+	  fclose(fp);*/
 
   unsigned char c[12][CRYPTO_C_BYTES];
   poly z[12];
-  //poly z;
-  poly_k a;
-  int succthread = -1;    
 
- // omp_set_num_threads(4);
-#pragma omp parallel default(none) shared(c, sk, a, succthread, sm, mlen, smlen, m, z)
-    {
-        
-    int tid = omp_get_thread_num();
-    uint32_t pos_list[PARAM_H];
-    int16_t sign_list[PARAM_H];
-    poly y, y_ntt, Sc;
-    poly_k v, Ec;
+  int succthread = -1;
 
-  unsigned char randomness[CRYPTO_SEEDBYTES], randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES];
-  unsigned int k;
-  int rsp, nonce = 0;  // Initialize domain separator for sampling y
+#ifdef STATS
+  ctr_sign=0;
+  rejwctr=0;
+  rejyzctr=0;
+#endif
 
-  // Get H(seed_y, r, H(m)) to sample y
-  randombytes(randomness_input+CRYPTO_RANDOMBYTES, CRYPTO_RANDOMBYTES);
-  memcpy(randomness_input, &sk[CRYPTO_SECRETKEYBYTES-CRYPTO_SEEDBYTES], CRYPTO_SEEDBYTES);
-  SHAKE(randomness_input+CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES, HM_BYTES, m, mlen);
-  SHAKE(randomness, CRYPTO_SEEDBYTES, randomness_input, CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES);
 
-  poly_uniform(a, &sk[CRYPTO_SECRETKEYBYTES-2*CRYPTO_SEEDBYTES]);
+#pragma omp parallel default(none) shared(c, z, sk, succthread, mlen, m)
+  {
+	  int tid = omp_get_thread_num();
+	  int nonce = tid;
+	  int noncestep = omp_get_num_threads();
+	  poly y, y_ntt, Sc;
+	  poly_k a, v, Ec;
+
+	  unsigned char randomness[CRYPTO_SEEDBYTES];
+	  unsigned char randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+2*HM_BYTES];
+
+	  uint32_t pos_list[PARAM_H];
+	  int16_t sign_list[PARAM_H];
+
+	  int k, rsp; // Initialize domain separator for sampling y
+
+	  // Get H(seed_y, r, H(m)) to sample y
+	  memcpy(randomness_input, &sk[CRYPTO_SECRETKEYBYTES-HM_BYTES-CRYPTO_SEEDBYTES], CRYPTO_SEEDBYTES);
+	  randombytes(&randomness_input[CRYPTO_RANDOMBYTES], CRYPTO_RANDOMBYTES);
+
+	  SHAKE(&randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES], HM_BYTES, m, mlen);
+	  SHAKE(randomness, CRYPTO_SEEDBYTES, randomness_input, CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES);
+	  memcpy(&randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES+HM_BYTES], &sk[CRYPTO_SECRETKEYBYTES-HM_BYTES], HM_BYTES);
+	  poly_uniform(a, &sk[CRYPTO_SECRETKEYBYTES-HM_BYTES-2*CRYPTO_SEEDBYTES]);
 
   while (succthread < 0) {
-
-		/*tend=omp_get_wtime();
-		if (tend-tstart > 15) {
-			printf("crypto_sign takes too long. Ending.\n");
-			exit(-2003);
-		}*/
+#ifdef STATS
+#pragma omp atomic
+  ctr_sign++;
+#endif
 
     sample_y(y, randomness, ++nonce);           // Sample y uniformly at random from [-B,B]
     poly_ntt (y_ntt, y);
+
+    if (succthread >= 0)
+    	break;
+
     for (k=0; k<PARAM_K; k++)
       poly_mul(&v[k*PARAM_N], &a[k*PARAM_N], y_ntt);
 
-    hash_H(c[tid], v, randomness_input+CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES);
+    hash_H(c[tid], v, &randomness_input[CRYPTO_RANDOMBYTES+CRYPTO_SEEDBYTES]);
+
     encode_c(pos_list, sign_list, c[tid]);           // Generate c = Enc(c'), where c' is the hashing of v together with m
     sparse_mul8(Sc, sk, pos_list, sign_list);
     poly_add(z[tid], y, Sc);                         // Compute z = y + sc
     
+    if (succthread >= 0)
+    	break;
+
     if (test_rejection(z[tid]) != 0) {               // Rejection sampling
+#ifdef STATS
+  rejyzctr++;
+#endif
       continue;
     }
 
     for (k=0; k<PARAM_K; k++) {
-      sparse_mul8(&Ec[k*PARAM_N], sk+(sizeof(int8_t)*PARAM_N*(k+1)), pos_list, sign_list);
+      sparse_mul8(&Ec[k*PARAM_N], &sk[(k+1)*PARAM_N], pos_list, sign_list);
       poly_sub(&v[k*PARAM_N], &v[k*PARAM_N], &Ec[k*PARAM_N]);
       rsp = test_correctness(&v[k*PARAM_N]);
       if (rsp != 0) {
-          break;
+#ifdef STATS
+  rejwctr++;
+#endif
+        break;
       }
     }
     if (rsp != 0)
 	  continue;
 
 #pragma omp critical
-      {
-          if(succthread < 0) {
-              succthread=tid;
-                // Copy message to signature package, and pack signature
-              for (unsigned long long i = 0; i < mlen; i++)
-                  sm[CRYPTO_BYTES+i] = m[i];
-              *smlen = CRYPTO_BYTES + mlen;
-              encode_sig(sm, c[succthread], z[succthread]);
-          }
-      }
-
+    if(succthread < 0) {
+    	succthread=tid;
+    }
 
   } // End while
-
   } // End parallel
 
-  #ifdef SCOREP
-  SCOREP_USER_REGION_END(cryptosign);
-#endif  
-  return 0;  
+  // Copy message to signature package, and pack signature
+ 	for (unsigned long long i = 0; i < mlen; i++)
+		sm[CRYPTO_BYTES+i] = m[i];
+	*smlen = CRYPTO_BYTES + mlen;
+	encode_sig(sm, c[succthread], z[succthread]);
+
+  return 0;
 }
 
 
@@ -525,63 +343,44 @@ int crypto_sign(unsigned char *sm, unsigned long long *smlen, const unsigned cha
 ************************************************************/
 int crypto_sign_open(unsigned char *m, unsigned long long *mlen, const unsigned char *sm, unsigned long long smlen, const unsigned char *pk)
 {
- #ifdef SCOREP
-  SCOREP_USER_REGION_DEFINE(cryptosignopen);
-  SCOREP_USER_REGION_BEGIN(cryptosignopen, "cryptosignopen", SCOREP_USER_REGION_TYPE_COMMON);
-#endif
-	
-  unsigned char c[CRYPTO_C_BYTES], c_sig[CRYPTO_C_BYTES], seed[CRYPTO_SEEDBYTES], hm[HM_BYTES];
+  unsigned char c[CRYPTO_C_BYTES], c_sig[CRYPTO_C_BYTES], seed[CRYPTO_SEEDBYTES], hm[2*HM_BYTES];
   uint32_t pos_list[PARAM_H];
   int16_t sign_list[PARAM_H]; 
   int32_t pk_t[PARAM_N*PARAM_K];
   poly_k w, a, Tc;
   poly z, z_ntt;
   int k;
-  bool cond3;
-  
-	cond3=false;
 
-  if (smlen >= CRYPTO_BYTES) {
+  if (smlen < CRYPTO_BYTES) return -1;
 
   decode_sig(c, z, sm);
+
+
+  if (test_z(z) != 0) return -2;   // Check norm of z
+  decode_pk(pk_t, seed, pk);
   
-  if (test_z(z) == 0) {
-  
-	  decode_pk(pk_t, seed, pk);  
-	  poly_uniform(a, seed);
-	  encode_c(pos_list, sign_list, c);
-	  poly_ntt(z_ntt, z);
+  // Get H(m) and hash_pk
+  SHAKE(hm, HM_BYTES, &sm[CRYPTO_BYTES], smlen-CRYPTO_BYTES);
+  SHAKE(&hm[HM_BYTES], HM_BYTES, pk, CRYPTO_PUBLICKEYBYTES-CRYPTO_SEEDBYTES);
+
+  poly_uniform(a, seed);
+  encode_c(pos_list, sign_list, c);
+  poly_ntt(z_ntt, z);
 
 #pragma omp parallel for
-	  for (k=0; k<PARAM_K; k++) {      // Compute w = az - tc
-		poly_mul(&w[k*PARAM_N], &a[k*PARAM_N], z_ntt);
-		sparse_mul32(&Tc[k*PARAM_N], pk_t+(k*PARAM_N), pos_list, sign_list);
-		poly_sub(&w[k*PARAM_N], &w[k*PARAM_N], &Tc[k*PARAM_N]);
-	  }    
-	  SHAKE(hm, HM_BYTES, sm+CRYPTO_BYTES, smlen-CRYPTO_BYTES);
-	  hash_H(c_sig, w, hm);
+  for (k=0; k<PARAM_K; k++) {      // Compute w = az - tc
+    sparse_mul32(&Tc[k*PARAM_N], &pk_t[k*PARAM_N], pos_list, sign_list);
+    poly_mul(&w[k*PARAM_N], &a[k*PARAM_N], z_ntt);
+    poly_sub_reduce(&w[k*PARAM_N], &w[k*PARAM_N], &Tc[k*PARAM_N]);
+  }    
+  hash_H(c_sig, w, hm);
 
-	  // Check if the calculated c matches c from the signature
-	  cond3 = memcmp(c, c_sig, CRYPTO_C_BYTES);
-	  if (!cond3) 
-	  {	  
-		  *mlen = smlen-CRYPTO_BYTES;
-		  for (unsigned long long i = 0; i < *mlen; i++)
-			m[i] = sm[CRYPTO_BYTES+i];
-		  }
-	}
-  }
+  // Check if the calculated c matches c from the signature
+  if (memcmp(c, c_sig, CRYPTO_C_BYTES)) return -3;
   
-  	#ifdef SCOREP
-	  SCOREP_USER_REGION_END(cryptosignopen);
-	#endif 
-  
-  if (smlen < CRYPTO_BYTES)
-	return -1;
-  if (test_z(z) != 0) 
-	  return -2;   // Check norm of z
-  if (cond3)
-	  return -3;
-  else
-	  return 0;
+  *mlen = smlen-CRYPTO_BYTES;
+  for (unsigned long long i = 0; i < *mlen; i++)
+    m[i] = sm[CRYPTO_BYTES+i];
+
+  return 0;
 }

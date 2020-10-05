@@ -4,26 +4,34 @@
 * Abstract: utility functions for testing and benchmarking
 *********************************************************************************************/
 
+#define OS_LINUX    1
+#define OS_TARGET OS_LINUX
+
 #include "cpucycles.h"
-#include <time.h>
-
-#ifdef _WIN32
-# include <intrin.h>
+#if (OS_TARGET == OS_WIN)
+  #include <intrin.h>
+#elif (OS_TARGET == OS_LINUX) && (TARGET == TARGET_ARM || TARGET == TARGET_ARM64)
+  #include <time.h>
 #endif
 
-uint64_t cpucycles(void)
-{
-#ifdef _WIN32
-	// _mm_lfence();  // optionally wait for earlier insns to retire before reading the clock
-	uint64_t tsc = (uint64_t)__rdtsc();
-	// _mm_lfence();  // optionally block later instructions until rdtsc retires
-	return tsc;
+
+int64_t cpucycles(void)
+{ // Access system counter for benchmarking
+#if (OS_TARGET == OS_WIN) && (TARGET == TARGET_AMD64 || TARGET == TARGET_x86)
+  return __rdtsc();
+#elif (OS_TARGET == OS_WIN) && (TARGET == TARGET_ARM)
+  return __rdpmccntr64();
+#elif (OS_TARGET == OS_LINUX) && (TARGET == TARGET_AMD64 || TARGET == TARGET_x86)
+  unsigned int hi, lo;
+
+  asm volatile ("rdtsc\n\t" : "=a" (lo), "=d"(hi));
+  return ((int64_t)lo) | (((int64_t)hi) << 32);
+#elif (OS_TARGET == OS_LINUX) && (TARGET == TARGET_ARM || TARGET == TARGET_ARM64)
+  struct timespec time;
+
+  clock_gettime(CLOCK_REALTIME, &time);
+  return (int64_t)(time.tv_sec*1e9 + time.tv_nsec);
 #else
-	// Access system counter for benchmarking
-	unsigned int hi, lo;
-
-	asm volatile ("rdtsc\n\t" : "=a" (lo), "=d"(hi));
-	return (uint64_t)((int64_t)lo) | (((int64_t)hi) << 32);
+  return 0;            
 #endif
-
 }

@@ -114,7 +114,6 @@
       <AdditionalIncludeDirectories>C:\out\Lib\x64\Release\include;C:\Program Files\Java\jdk1.8.0_221\include;C:\Program Files\Java\jdk1.8.0_221\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_AMD64_;_qTESLA_p_III_;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OpenMPSupport>true</OpenMPSupport>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

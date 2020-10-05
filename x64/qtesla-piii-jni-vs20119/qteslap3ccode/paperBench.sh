@@ -16,8 +16,8 @@ make CC=gcc
 
 FILEIM=$LOGFILEBASE.gcc-
 
-FILE=$FILEIM.1T.txt
-export OMP_NUM_THREADS=1
+FILE=$FILEIM.4T.txt
+export OMP_NUM_THREADS=4
 for ((i=0; i<REPS; i=i+1))	
 do
 	./$EXE $KEYS $SIGNPR 7 >> $FILE

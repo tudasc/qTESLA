@@ -28,7 +28,7 @@ public final class QTESLAParameter {
 	/**
 	 * Size of Hashed Message
 	 */
-	public static final int MESSAGE = 64;
+	public static final int MESSAGE = 40;
 	
 	/**
 	 * One of Five Heuristic and Provably Secure Security Categories
@@ -209,10 +209,8 @@ public final class QTESLAParameter {
 		
 			this.boundE = 901; //
 			this.boundS = 901; //
+			privateKeySize = ((this.k+1)*this.sBit*this.n/8 + 2*SEED + MESSAGE); // C++-way, same value
 			
-			//privateKeySize = this.n + this.n * this.k + SEED * 2; // Stimmt knapp nicht??	// Standard Java Calcuation
-			
-			privateKeySize = ((this.k+1)*this.sBit*this.n/8 + 2*32 + 40); // C++-way, same value
 			this.qInverse = 587710463L;// 861290495L;					
 
 			this.paulBarrettMultiplier = 5; // 15;
@@ -250,14 +248,8 @@ public final class QTESLAParameter {
 			this.privateKeySize = 1;
 			
 		}
-		signatureSize = ((n * (bBit+1)+7)/8 + 32);
-		//signatureSize = (n * d + 7) / 8 + HASH;		
-		
-
-		// ((PARAM_N	*	(PARAM_B_BITS	+ 1)	+7)/8 + CRYPTO_C_BYTES)
-		// ((n 			* 	(bBit 			+ 1)	+7)/8 + HASH );		
-		publicKeySize = (n * k * qLogarithm + 7) / 8 + SEED;
-		
+		signatureSize = ((n * (bBit+1)+7)/8 + HASH);	
+		publicKeySize = (n * k * qLogarithm + 7) / 8 + SEED;		
 	}
 	
 }

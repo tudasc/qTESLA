@@ -543,7 +543,7 @@ public class FederalInformationProcessingStandard202 {
 			for (int i = 0; i < outputLength % rate; i++) {				
 				output[outputOffset + i] = T[i];				
 			}		
-		}		
+		}	
 	}
 	
 	public static void customizableSecureHashAlgorithmKECCAK128Simple (

@@ -25,6 +25,10 @@ public class QTESLAKey {
 		return _key_data;
 	}
 	
+	public byte[] getEncoded() {
+		return _key_data;
+	}
+	
 	public String toString() {
 	    return getClass().getName() + "@" + Arrays.toString(_key_data);
 	}

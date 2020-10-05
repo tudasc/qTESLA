@@ -115,7 +115,6 @@
       <PreprocessorDefinitions>_AMD64_;_qTESLA_p_III_;_CRT_SECURE_NO_WARNINGS;STATS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

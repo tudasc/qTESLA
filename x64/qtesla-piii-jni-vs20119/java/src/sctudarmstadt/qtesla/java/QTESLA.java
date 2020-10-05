@@ -16,7 +16,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-import java.nio.charset.StandardCharsets;
+import java.io.*;  
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -94,7 +94,7 @@ public class QTESLA {
 	 *********************************************************************************************************************/
 	private static void hashFunction_MB (byte[] output, int[] V, final byte[] message, int off) {
 		
-		byte[] T = new byte[parameter.n * parameter.k + 2 * parameter.h];
+		byte[] T = new byte[parameter.n * parameter.k + 2 * QTESLAParameter.MESSAGE];
 		int mask;
 		int cL;
 		int temp;		
@@ -119,10 +119,10 @@ public class QTESLA {
 			}
 		}
 		
-		System.arraycopy(message, off, T, parameter.k * parameter.n, 2* parameter.h);	
+		System.arraycopy(message, off, T, parameter.k * parameter.n, 2 * QTESLAParameter.MESSAGE);	
 		
 		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (				
-			output, 0/* off*/, QTESLAParameter.HASH, T, 0, parameter.k * parameter.n + 2*parameter.h/*QTESLAParameter.MESSAGE*/);
+			output, 0/* off*/, QTESLAParameter.HASH, T, 0, parameter.k * parameter.n + 2 * QTESLAParameter.MESSAGE);
 	}
 	
 	/**********************************************************************************************************************
@@ -545,7 +545,7 @@ public class QTESLA {
 	 * @return		false			Fulfillment
 	 * 				true			No Fulfillment
 	 *********************************************************************/
-	private static boolean checkPolynomial (int[] polynomial, int bound) {
+	/*private static boolean checkPolynomial (int[] polynomial, int bound) {
 		
 		long summation = 0;
 		int limit = parameter.n;
@@ -562,7 +562,7 @@ public class QTESLA {
 		for (int i = 0; i < parameter.h; i++) {
 			
 			for (int j = 0; j < limit - 1; j++) {
-				/* If list[j + 1] > list[j] Then Exchanges Contents */
+				// If list[j + 1] > list[j] Then Exchanges Contents
 				mask		= (list[j + 1] - list[j]) >> 31;
 				temporary	= (list[j + 1] & mask) | (list[j]     & (~ mask));
 				list[j + 1]	= (list[j]     & mask) | (list[j + 1] & (~ mask));
@@ -584,7 +584,7 @@ public class QTESLA {
 		
 		return false;
 		
-	}
+	}*/
 	
 	/**********************************************************************************
 	 * Description:	Checks Whether the Generated Error Polynomial or the Generated
@@ -639,7 +639,7 @@ public class QTESLA {
 	}	
 	
 	
-	private static boolean checkPolynomial (long[] polynomial, int offset, int bound) {
+	/*private static boolean checkPolynomial (long[] polynomial, int offset, int bound) {
 		
 		int summation = 0;
 		int limit = parameter.n;
@@ -656,7 +656,7 @@ public class QTESLA {
 		for (int i = 0; i < parameter.h; i++) {
 			
 			for (int j = 0; j < limit - 1; j++) {
-				/* If list[j + 1] > list[j] Then Exchanges Contents */
+				// If list[j + 1] > list[j] Then Exchanges Contents 
 				mask		= (list[j + 1] - list[j]) >> 31;
 				temporary	= (list[j + 1] & mask) | (list[j]	  & (~ mask));
 				list[j + 1]	= (list[j]     & mask) | (list[j + 1] & (~ mask));
@@ -677,7 +677,7 @@ public class QTESLA {
 		
 		return false;
 		
-	}
+	}*/
 	
 	/************************************************************************************************************************
 	 * Description:	Generates A Pair of Public Key and Private Key for Heuristic qTESLA Signature Scheme
@@ -695,91 +695,6 @@ public class QTESLA {
 	 * @throws 		NoSuchPaddingException
 	 * @throws		ShortBufferException
 	 ************************************************************************************************************************/
-	public int generateKeyPair (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) throws
-		
-		BadPaddingException,
-		IllegalBlockSizeException,
-		InvalidKeyException,
-		NoSuchAlgorithmException,
-		NoSuchPaddingException,
-		ShortBufferException
-
-	{
-		
-		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
-		int nonce = 0;
-		
-		byte[] randomness			= new byte[QTESLAParameter.RANDOM];
-		
-		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended	= new byte[QTESLAParameter.SEED * 4];
-		
-		int[] secretPolynomial	= new int[parameter.n];
-		int[] errorPolynomial	= new int[parameter.n];
-		int[] A					= new int[parameter.n];
-		int[] T					= new int[parameter.n];
-		
-		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
-		// secureRandom.nextBytes (randomness);
-		
-		if (parameter.parameterSet == "qTESLA-I") { 
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				
-				randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
-			
-			);
-			
-		}
-		
-		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				
-				randomnessExtended, 0, QTESLAParameter.SEED * 4, randomness, 0, QTESLAParameter.RANDOM
-			
-			);
-			
-		}
-		
-		/* 
-		 * Sample the Error Polynomial Fulfilling the Criteria 
-		 * Choose All Error Polynomial in R with Entries from D_SIGMA
-		 * Repeat Step at Iteration if the h Largest Entries of Error Polynomial Summation to L_E
-		 */
-		do {
-			
-			qTESLAGaussianSampler.polynomialGaussianSampler (errorPolynomial, 0, randomnessExtended, 0, ++nonce);
-			
-		} while (checkPolynomial (errorPolynomial, parameter.boundE) == true);
-		
-		/* 
-		 * Sample the Secret Polynomial Fulfilling the Criteria 
-		 * Choose Secret Polynomial in R with Entries from D_SIGMA
-		 * Repeat Step if the h Largest Entries of Secret Polynomial Summation to L_S
-		 */
-		do {
-			
-			qTESLAGaussianSampler.polynomialGaussianSampler (secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED, ++nonce);
-				
-		} while (checkPolynomial (secretPolynomial, parameter.boundS) == true);
-		
-		/* Generate Uniform Polynomial A */
-		polynomial.polynomialUniform (A, randomnessExtended, QTESLAParameter.SEED * 2);
-		
-		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
-		polynomial.polynomialMultiplication (T, A, secretPolynomial);
-		polynomial.polynomialAdditionCorrection (T, T, errorPolynomial);
-		
-		/* Pack Public and Private Keys */
-		System.err.println("Calling deprecated generateKeyPair");
-		//qTESLAPack.encodePrivateKey (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * 2);
-		//qTESLAPack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * 2);
-		
-		return 0;
-		
-	}
 	
 	/******************************************************************************************************************
 	 * Description:	Generates A Pair of Public Key and Private Key for Provably Secure qTESLA Signature Scheme
@@ -823,57 +738,39 @@ public class QTESLA {
 	int[] T										= new int[parameter.n * parameter.k];
 	
 	/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-	randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
-	// secureRandom.nextBytes (randomness);
+	//randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
+	secureRandom.nextBytes (randomness);
 	
-	//TMP
-	 /* randomness[0]=-74;
-	  randomness[1]=89;
-	  randomness[2]=-62;
-	  randomness[3]=18;
-	  randomness[4]=106;
-	  randomness[5]=-120;
-	  randomness[6]=-47;
-	  randomness[7]=-10;
-	  randomness[8]=-96;
-	  randomness[9]=89;
-	  randomness[10]=9;
-	  randomness[11]=48;
-	  randomness[12]=33;
-	  randomness[13]=94;
-	  randomness[14]=-123;
-	  randomness[15]=-83;
-	  randomness[16]=41;
-	  randomness[17]=-76;
-	  randomness[18]=-109;
-	  randomness[19]=111;
-	  randomness[20]=-39;
-	  randomness[21]=-93;
-	  randomness[22]=61;
-	  randomness[23]=79;
-	  randomness[24]=60;
-	  randomness[25]=33;
-	  randomness[26]=47;
-	  randomness[27]=-95;
-	  randomness[28]=35;
-	  randomness[29]=-118;
-	  randomness[30]=8;
-	  randomness[31]=-81;*/
-	
-	if (parameter.parameterSet == "qTESLA-P-I") {
+///////// Replace randomness	
+/*	try  
+	{  
+		File file=new File("randomness.txt");    //creates a new file instance  
+		FileReader fr=new FileReader(file);   //reads the file  
+		BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
+		StringBuffer sb=new StringBuffer();    //constructs a string buffer with no characters  
+		String line;  
 		
-		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (			
-			randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM		
-		);
+		int i = 0;
 		
+		while((line=br.readLine())!=null)  
+		{  
+			randomness[i] = (byte)Integer.parseInt(line);
+			i++;
+		}  
+		fr.close();    //closes the stream and release the resources  
 	}
+	
+	catch(Exception e)  
+	{  
+		e.printStackTrace();  
+	}  */
+///////// Replace randomness	
+	
 	
 	if (parameter.parameterSet == "qTESLA-P-III") {
 		
-		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-			
-			randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM
-		
+		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (			
+			randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM		
 		);		
 	}
 	
@@ -886,7 +783,8 @@ public class QTESLA {
 		do {			
 			qTESLAGaussianSampler.polynomialGaussianSampler_MB (					
 				errorPolynomial, parameter.n * i, randomnessExtended, QTESLAParameter.SEED * i, ++nonce				
-			);			
+			);	
+			
 		} while (checkPolynomial_MB (errorPolynomial, parameter.n * i, parameter.boundE) == true);
 	
 	}
@@ -903,6 +801,59 @@ public class QTESLA {
 		);
 					
 	} while (checkPolynomial_MB (secretPolynomial, 0, parameter.boundS) == true);
+	
+///////// Replace errorPolynomial	
+	/*try  
+{  
+	File file=new File("e.txt");    //creates a new file instance  
+	FileReader fr=new FileReader(file);   //reads the file  
+	BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
+	String line;  
+	
+	int i = 0;
+	
+	while((line=br.readLine())!=null)  
+	{  
+		errorPolynomial[i] = (byte)Integer.parseInt(line);
+		i++;
+	}  
+	fr.close();    //closes the stream and release the resources  
+}
+
+catch(Exception e)  
+{  
+	e.printStackTrace();  
+} */ 
+///////// Replace errorPolynomial	
+
+///////// Replace errorPolynomial	
+/*try  
+{  
+	File file=new File("s.txt");    //creates a new file instance  
+	FileReader fr=new FileReader(file);   //reads the file  
+	BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
+	String line;  
+	
+	int i = 0;
+
+while((line=br.readLine())!=null)  
+{  
+	secretPolynomial[i] = (byte)Integer.parseInt(line);
+	i++;
+}  
+fr.close();    //closes the stream and release the resources  
+}
+
+catch(Exception e)  
+{  
+	e.printStackTrace();  
+}  */
+///////// Replace errorPolynomial	
+	
+	
+	
+	
+	
 	
 	/* Generate Uniform Polynomial A */
 	polynomial.polynomialUniform_MB (A, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));		
@@ -921,139 +872,21 @@ public class QTESLA {
 	
 	qTESLAPack.encodePublicKey_MB (publicKey, T, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
 
+	byte[] hash_pk = new byte [QTESLAParameter.MESSAGE];	
 	
-	/* Pack Public and Private Keys */	
-	byte[] hash_pk = new byte [parameter.h];	
 	FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (			
-			hash_pk, 0, parameter.h, 
+			hash_pk, 0, QTESLAParameter.MESSAGE, 
 			publicKey,  0, parameter.publicKeySize - QTESLAParameter.SEED				
 		);
 	
 	qTESLAPack.encodePrivateKey_MB (privateKey, secretPolynomial, errorPolynomial, randomnessExtended, 
 			(parameter.k + 1) * QTESLAParameter.SEED, hash_pk);	
+	
 	return 0;	
 }
 	
 	
-	public int generateKeyPairP (byte[] publicKey, byte[] privateKey, SecureRandom secureRandom) throws
-
-		BadPaddingException,
-		IllegalBlockSizeException,
-		InvalidKeyException,
-		NoSuchAlgorithmException,
-		NoSuchPaddingException,
-		ShortBufferException
-
-	{
-		
-		/* Initialize Domain Separator for Error Polynomial and Secret Polynomial */
-		int nonce = 0;
-		
-		byte[] randomness			= new byte[QTESLAParameter.RANDOM];
-		
-		/* Extend Random Bytes to Seed Generation of Error Polynomial and Secret Polynomial */
-		byte[] randomnessExtended	= new byte[QTESLAParameter.SEED * (parameter.k + 3)];
-		
-		long[] secretPolynomial							= new long[parameter.n];
-		long[] secretPolynomialNumberTheoreticTransform	= new long[parameter.n];
-		long[] errorPolynomial							= new long[parameter.n * parameter.k];
-		long[] A										= new long[parameter.n * parameter.k];
-		long[] T										= new long[parameter.n * parameter.k];
-		
-		/* Get randomnessExtended <- seedErrorPolynomial, seedSecretPolynomial, seedA, seedY */
-		randomNumberGenerator.randomByte (randomness, 0, QTESLAParameter.RANDOM);
-		// secureRandom.nextBytes (randomness);
-		
-		if (parameter.parameterSet == "qTESLA-P-I") {
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				
-				randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM
-			
-			);
-			
-		}
-		
-		if (parameter.parameterSet == "qTESLA-P-III") {
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				
-				randomnessExtended, 0, QTESLAParameter.SEED * (parameter.k + 3), randomness, 0, QTESLAParameter.RANDOM
-			
-			);
-			
-		}
-		
-		/* 
-		 * Sample the Error Polynomial Fulfilling the Criteria 
-		 * Choose All Error Polynomial_i in R with Entries from D_SIGMA
-		 * Repeat Step at Iteration if the h Largest Entries of Error Polynomial_k Summation to L_E
-		 */
-		for (int i = 0; i < parameter.k; i++) {
-			
-			do {
-				
-				qTESLAGaussianSampler.polynomialGaussianSampler (
-						
-					errorPolynomial, parameter.n * i, randomnessExtended, QTESLAParameter.SEED * i, ++nonce
-					
-				);
-				
-			} while (checkPolynomial (errorPolynomial, parameter.n * i, parameter.boundE) == true);
-		
-		}
-		
-		/* 
-		 * Sample the Secret Polynomial Fulfilling the Criteria 
-		 * Choose Secret Polynomial in R with Entries from D_SIGMA
-		 * Repeat Step if the h Largest Entries of Secret Polynomial Summation to L_S
-		 */
-		do {
-			
-			qTESLAGaussianSampler.polynomialGaussianSampler (
-					
-				secretPolynomial, 0, randomnessExtended, QTESLAParameter.SEED * parameter.k, ++nonce
-				
-			);
-						
-		} while (checkPolynomial (secretPolynomial, 0, parameter.boundS) == true);
-		
-		/* Generate Uniform Polynomial A */
-		polynomial.polynomialUniform (A, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
-			
-		polynomial.polynomialNumberTheoreticTransform (secretPolynomialNumberTheoreticTransform, secretPolynomial);
-		
-		/* Compute the Public Key T = A * secretPolynomial + errorPolynomial */
-		for (int i = 0; i < parameter.k; i++) {
-			
-			polynomial.polynomialMultiplication (
-					
-				T, parameter.n * i, A, parameter.n * i, secretPolynomialNumberTheoreticTransform, 0
-				
-			);	
-			
-			polynomial.polynomialAdditionCorrection (
-					
-				T, parameter.n * i, T, parameter.n * i, errorPolynomial, parameter.n * i
-				
-			);
-		
-		}
-		
-		/* Pack Public and Private Keys */
-		qTESLAPack.packPrivateKey (
-				
-			privateKey, secretPolynomial, errorPolynomial, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1)
-			
-		);
-		
-		qTESLAPack.encodePublicKey (publicKey, T, randomnessExtended, QTESLAParameter.SEED * (parameter.k + 1));
-		
-		return 0;
-		
-	}
-	
-	/**************************************************************************************************************
+/**************************************************************************************************************
 	 * Description:	Generates A Signature for A Given Message According to the Ring-TESLA Signature Scheme for
 	 * 				Heuristic qTESLA
 	 * 
@@ -1075,151 +908,6 @@ public class QTESLA {
 	 * @throws		NoSuchPaddingException 
 	 * @throws		ShortBufferException
 	 **************************************************************************************************************/
-public int sign (
-			
-			byte[] signature, int signatureOffset, int[] signatureLength,
-			final byte[] message, int messageOffset, int messageLength,
-			final byte[] privateKey, SecureRandom secureRandom
-			
-	) throws 
-	
-		BadPaddingException,
-		IllegalBlockSizeException,
-		InvalidKeyException,
-		NoSuchAlgorithmException,
-		NoSuchPaddingException,
-		ShortBufferException
-
-	{
-		
-		byte[] C						= new byte[QTESLAParameter.HASH];
-		byte[] randomness				= new byte[QTESLAParameter.SEED];
-		byte[] randomnessInput			=
-			new byte[QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE];
-		byte[] seed						= new byte[QTESLAParameter.SEED * 2];
-		// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
-		int[] positionList				= new int[parameter.h];
-		short[] signList				= new short[parameter.h];
-		short[] secretPolynomial		= new short[parameter.n];
-		short[] errorPolynomial			= new short[parameter.n];
-		
-		int[] A		= new int[parameter.n];
-		int[] V		= new int[parameter.n];
-		int[] Y		= new int[parameter.n];
-		int[] Z		= new int[parameter.n];
-		int[] SC	= new int[parameter.n];
-		int[] EC	= new int[parameter.n];
-		
-		/* Domain Separator for Sampling Y */
-		int nonce = 0;
-		
-		System.err.println("Call of deprecated sign");
-		//qTESLAPack.decodePrivateKey (seed, secretPolynomial, errorPolynomial, privateKey);
-		
-		randomNumberGenerator.randomByte (randomnessInput, QTESLAParameter.RANDOM, QTESLAParameter.RANDOM);
-		// secureRandom.nextBytes (temporaryRandomnessInput);
-		// System.arraycopy (temporaryRandomnessInput, 0, randomnessInput, Polynomial.RANDOM, Polynomial.RANDOM);
-		
-		System.arraycopy (seed, QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED);
-		
-		if (parameter.parameterSet == "qTESLA-I") {
-		
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
-				message, 0, messageLength
-			
-			);
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK128 (
-				
-				randomness, 0, QTESLAParameter.SEED,
-				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
-			
-			);
-		
-		}
-		
-		if (parameter.parameterSet == "qTESLA-III-Speed" || parameter.parameterSet == "qTESLA-III-Size") {
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				
-				randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, QTESLAParameter.MESSAGE,
-				message, 0, messageLength
-			
-			);
-			
-			FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (
-				
-				randomness, 0, QTESLAParameter.SEED,
-				randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
-			
-			);
-			
-		}
-		
-		//DeterministicValueReader.readR_IandR(randomnessInput, randomness);
-		
-		polynomial.polynomialUniform (A, seed, 0);
-		//DeterministicValueReader.readA(A);
-		
-		/* Loop Due to Possible Rejection */
-		while (true) {
-			
-			/* Sample Y Uniformly Random from -B to B */
-			qTESLAYSampler.sampleY (Y, randomness, 0, ++nonce);		
-			
-			/* V = A * Y Modulo Q */
-			polynomial.polynomialMultiplication (V, A, Y);
-			
-			hashFunction (C, 0, V, randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED);
-			
-			/* Generate C = EncodeC (C') Where C' is the Hashing of V Together with Message */
-			encodeC (positionList, signList, C, 0);
-			
-			polynomial.sparsePolynomialMultiplication16 (SC, secretPolynomial, positionList, signList);
-			
-			/* Z = Y + EC Modulo Q */
-			polynomial.polynomialAddition(Z, Y, SC);
-			
-			/* Rejection Sampling */
-			if (testRejection (Z) == true) {
-				
-				continue;
-				
-			}
-			
-			polynomial.sparsePolynomialMultiplication16 (EC, errorPolynomial, positionList, signList);
-			
-			/* V = V - EC modulo Q */
-			polynomial.polynomialSubtractionCorrection (V, V, EC);
-			
-			if (testCorrectness (V) == true) {
-				
-				continue;
-				
-			}
-			
-			/* Copy the Message into the Signature Package */
-			System.arraycopy (
-					
-				message, messageOffset, signature, signatureOffset + parameter.signatureSize, messageLength
-				
-			);
-				
-			/* Length of the Output */
-			signatureLength[0] = parameter.signatureSize + messageLength;
-				
-			/* Pack Signature */
-			qTESLAPack.encodeSignature (signature, 0, C, 0, Z);
-			
-			return 0;
-			
-		}
-		
-	}
-	
-
 public int sign_MB (
 		
 		byte[] signature, int signatureOffset, int[] signatureLength,
@@ -1239,7 +927,7 @@ public int sign_MB (
 	byte[] C						= new byte[QTESLAParameter.HASH];
 	byte[] randomness				= new byte[QTESLAParameter.SEED];
 	byte[] randomnessInput			=
-		new byte[144];
+		new byte[QTESLAParameter.SEED + QTESLAParameter.RANDOM + 2 * QTESLAParameter.MESSAGE];
 	byte[] seed						= new byte[QTESLAParameter.SEED * 2];
 	// byte[] temporaryRandomnessInput	= new byte[Polynomial.RANDOM];
 	int[] positionList				= new int[parameter.h];
@@ -1260,31 +948,53 @@ public int sign_MB (
 	
 	/* Domain Separator for Sampling Y */
 	int nonce = 0;
-	//DeterministicValueReader.readR_IandR(randomnessInput, randomness);
 
 	System.arraycopy (			
-			privateKey, parameter.privateKeySize - parameter.h - QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED		
+			privateKey, parameter.privateKeySize - QTESLAParameter.MESSAGE - QTESLAParameter.SEED, randomnessInput, 0, QTESLAParameter.SEED		
 	);	
-
 	randomNumberGenerator.randomByte (randomnessInput, QTESLAParameter.RANDOM, QTESLAParameter.RANDOM);
+	
+///////// Replace randomnessInput	
+/*try  
+{  
+	File file=new File("randomness_input.txt");    //creates a new file instance  
+	FileReader fr=new FileReader(file);   //reads the file  
+	BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
+	String line;  
+	
+	int i = 0;
+	
+	while((line=br.readLine())!=null)  
+	{  
+		randomnessInput[i] = (byte)Integer.parseInt(line);
+		i++;
+	}  
+	fr.close();    //closes the stream and release the resources  
+}
+
+catch(Exception e)  
+{  
+	e.printStackTrace();  
+}  */
+///////// Replace randomnessInput	
 	
 	FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (		
 			randomnessInput, QTESLAParameter.RANDOM + QTESLAParameter.SEED, 
-			parameter.h,
+			QTESLAParameter.MESSAGE,
 			message, 0, messageLength	
 		);	
 		
 	FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (		
 			randomness, 0, QTESLAParameter.SEED,
-			randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + parameter.h
+			randomnessInput, 0, QTESLAParameter.RANDOM + QTESLAParameter.SEED + QTESLAParameter.MESSAGE
 		);	
 		
 	System.arraycopy (			
-				privateKey, parameter.privateKeySize - parameter.h, randomnessInput,
-				QTESLAParameter.RANDOM + QTESLAParameter.RANDOM + parameter.h, parameter.h		
-		);	
+			privateKey, parameter.privateKeySize - QTESLAParameter.MESSAGE, 
+			randomnessInput, QTESLAParameter.RANDOM+QTESLAParameter.SEED+QTESLAParameter.MESSAGE, QTESLAParameter.MESSAGE		
+	);		
 	
-	polynomial.polynomialUniform_MB (A, privateKey, parameter.privateKeySize - parameter.h -2 * QTESLAParameter.SEED);	
+	polynomial.polynomialUniform_MB (A, privateKey, parameter.privateKeySize - QTESLAParameter.MESSAGE - 2 * QTESLAParameter.SEED);	
 	
 //	int cnt=0;
 	while (true) {
@@ -1348,42 +1058,7 @@ public int sign_MB (
 		signatureLength[0] = messageLength + parameter.signatureSize;
 			
 		/* Pack Signature */
-		qTESLAPack.encodeSignature_MB (signature, 0, C, 0, Z);	
-		
-		// DBG-Output
-		/*System.out.println("Y_ntt");
-		for(int g=0; g<Y_ntt.length; g++) System.out.println(Y_ntt[g]);
-		
-		System.out.println("V");
-		for(int g=0; g<V.length; g++) System.out.println(V[g]);
-		
-		System.out.println("C");
-		for(int g=0; g<C.length; g++) System.out.println(C[g]);
-		
-		System.out.println("positionList");
-		for(int g=0; g<positionList.length; g++) System.out.println(positionList[g]);
-		
-		System.out.println("positionList");
-		for(int g=0; g<signList.length; g++) System.out.println(signList[g]);
-		
-		System.out.println("SC");
-		for(int g=0; g<SC.length; g++) System.out.println(SC[g]);
-		
-		System.out.println("Z");
-		for(int g=0; g<Z.length; g++) System.out.println(Z[g]);
-		
-		System.out.println("EC");
-		for(int g=0; g<Z.length; g++) System.out.println(EC[g]);
-		
-		System.out.println("V");
-		for(int g=0; g<V.length; g++) System.out.println(V[g]);
-		
-		System.out.println("signature");
-		for(int g=0; g<signature.length; g++) System.out.println(signature[g]);*/
-
-		//System.out.println("Required " + cnt);
-
-		
+		qTESLAPack.encodeSignature_MB (signature, 0, C, 0, Z);			
 		return 0;		
 		
 	}
@@ -1718,6 +1393,7 @@ synchronized static boolean is_inner_done()
 	}
 	
 	
+	// DEPRECATED!!!! Only for Structure usable
 	public int signPParallelVersion2 (
 			
 			byte[] signature, int signatureOffset, int[] signatureLength,
@@ -1947,7 +1623,7 @@ synchronized static boolean is_inner_done()
 		byte[]	C					= new byte[QTESLAParameter.HASH];
 		byte[]	cSignature			= new byte[QTESLAParameter.HASH];
 		byte[]	seed				= new byte[QTESLAParameter.SEED];
-		byte[]	hashMessage			= new byte[2 * 40];
+		byte[]	hashMessage			= new byte[2 * QTESLAParameter.MESSAGE]; //[2 * 40];
 		int[]	newPublicKey		= new int[parameter.n * parameter.k];
 		
 		int[]	positionList		= new int[parameter.h];
@@ -1972,11 +1648,18 @@ synchronized static boolean is_inner_done()
 			return -2;			
 		}
 		
-		qTESLAPack.decodePublicKey_MB (newPublicKey, seed, 0, publicKey);
+		qTESLAPack.decodePublicKey_MB (newPublicKey, seed, 0, publicKey);	
+		
+		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (				
+				hashMessage, 0, QTESLAParameter.MESSAGE, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
+		);
+	
+		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (				
+				hashMessage, 40, 40, publicKey, 0, parameter.publicKeySize -QTESLAParameter.SEED
+		);	
 		
 		/* Generate A Polynomial */
-		polynomial.polynomialUniform_MB (A, seed, 0);
-		
+		polynomial.polynomialUniform_MB (A, seed, 0);		
 		encodeC (positionList, signList, C, 0);
 		
 		polynomial.polynomialNumberTheoreticTransform_MB (numberTheoreticTransformZ, Z);
@@ -1986,31 +1669,21 @@ synchronized static boolean is_inner_done()
 			
 			polynomial.polynomialMultiplication_MB (					
 				W, parameter.n * i, A, parameter.n * i, numberTheoreticTransformZ, 0				
-			);			
-
+			);
 			
 			polynomial.sparsePolynomialMultiplication32_MB (
 					
 				TC, parameter.n * i, newPublicKey, parameter.n * i, positionList, signList
 				
 			);
+			
 			polynomial.polynomialSubtractionReduction_MB (W, parameter.n * i, W, parameter.n * i, TC, parameter.n * i);
 			
-		}	
-		
-
-		// 40 is value of parameter.h
-		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (				
-			hashMessage, 0, 40, signature, parameter.signatureSize, signatureLength - parameter.signatureSize
-		);
-		
-		FederalInformationProcessingStandard202.secureHashAlgorithmKECCAK256 (				
-				hashMessage, 40, 40, publicKey, 0, parameter.publicKeySize -QTESLAParameter.SEED
-		);		
+		}		
 
 		
 		/* Obtain the Hash Symbol */
-		hashFunction_MB (cSignature, W, hashMessage, 0);
+		hashFunction_MB (cSignature, W, hashMessage, 0);		  
 		
 		/* Check if Same with One from Signature */
 		if (Common.memoryEqual (C, 0, cSignature, 0, QTESLAParameter.HASH) == false) {			

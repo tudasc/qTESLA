@@ -489,7 +489,8 @@ public class QTESLAGaussianSampler {
 				}
 				sign = samplingKeyArray[i*CDT_COLS] >> (RADIX32-1); 
 				data[dataOffset + i] = (sign & -data[ dataOffset + i ]) | (~sign & data [ dataOffset + i ] );
-			}
+			}			
+
 			
 			int stop=1;
 			

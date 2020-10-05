@@ -8,11 +8,10 @@
 #include "api.h"
 #include "params.h"
 #include "poly.h"
-#include <stdio.h>
 
 
-void pack_sk(unsigned char *sk, poly s, poly_k e, unsigned char *seeds)
-{ // Pack secret key sk
+void encode_sk(unsigned char *sk, const poly s, const poly_k e, const unsigned char *seeds, const unsigned char *hash_pk)
+{ // Encode secret key sk
   unsigned int i, k;
 
   for (i=0; i<PARAM_N; i++)
@@ -24,7 +23,8 @@ void pack_sk(unsigned char *sk, poly s, poly_k e, unsigned char *seeds)
       sk[k*PARAM_N+i] = (unsigned char)e[k*PARAM_N+i];
   
   memcpy(&sk[PARAM_K*PARAM_N], seeds, 2*CRYPTO_SEEDBYTES);
-} 
+  memcpy(&sk[PARAM_K*PARAM_N + 2*CRYPTO_SEEDBYTES], hash_pk, HM_BYTES);
+}
 
 #if defined(_qTESLA_p_I_)
 
@@ -96,7 +96,6 @@ void decode_pk(int32_t *pk, unsigned char *seedA, const unsigned char *pk_in)
     j += 29;
   }   
   memcpy(seedA, &pk_in[PARAM_N*PARAM_K*PARAM_Q_LOG/8], CRYPTO_SEEDBYTES);
-
 }
 
 
@@ -105,7 +104,7 @@ void decode_pk(int32_t *pk, unsigned char *seedA, const unsigned char *pk_in)
 void encode_sig(unsigned char *sm, unsigned char *c, poly z)
 { // Encode signature sm
   unsigned int i, j=0;
-  uint64_t *t = (uint64_t*)z;
+  uint32_t *t = (uint32_t*)z;
   uint32_t *pt = (uint32_t*)sm;
   
   for (i=0; i<(PARAM_N*(PARAM_B_BITS+1)/32); i+=10) {
@@ -216,7 +215,7 @@ void decode_pk(int32_t *pk, unsigned char *seedA, const unsigned char *pk_in)
 void encode_sig(unsigned char *sm, unsigned char *c, poly z)
 { // Encode signature sm
   unsigned int i, j=0;
-  uint64_t *t = (uint64_t*)z;
+  uint32_t *t = (uint32_t*)z;
   uint32_t *pt = (uint32_t*)sm;
   
   for (i=0; i<(PARAM_N*(PARAM_B_BITS+1)/32); i+=11) {
@@ -234,7 +233,6 @@ void encode_sig(unsigned char *sm, unsigned char *c, poly z)
     j += 16;
   }
   memcpy(&sm[PARAM_N*(PARAM_B_BITS+1)/8], c, CRYPTO_C_BYTES);
-  //printf("[encode_sig] Start from %i to %i.\n", PARAM_N*(PARAM_B_BITS+1)/8, PARAM_N*(PARAM_B_BITS+1)/8+CRYPTO_C_BYTES);
 }
 
 
@@ -263,8 +261,6 @@ void decode_sig(unsigned char *c, poly z, const unsigned char *sm)
     j += 11;
   }  
   memcpy(c, &sm[PARAM_N*(PARAM_B_BITS+1)/8], CRYPTO_C_BYTES);
-
-  //printf("[decode_sig] Start from %i to %i.\n", PARAM_N*(PARAM_B_BITS+1)/8, PARAM_N*(PARAM_B_BITS+1)/8+CRYPTO_C_BYTES);
 }
 
 #endif

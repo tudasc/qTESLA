@@ -11,6 +11,6 @@
 
     
 // Access system counter for benchmarking
-uint64_t cpucycles(void);
+int64_t cpucycles(void);
 
 #endif

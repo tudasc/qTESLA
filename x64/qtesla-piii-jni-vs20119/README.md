@@ -1,42 +1,72 @@
-# qtesla-PIII-JNI
-A sandbox for playing around with qTesla and JNI to prepare integration into CogniCrypt
+# qTESLA-PIII(-p-III)-JNI
+The qTESLA implementation ready for integration into CogniCrypt employing JNI to access the C-code and supporting the Java Security provider.
+It also includes the Java qTESLA version which was error corrected and adapted to the recent parameter set.
+Only the proven-III (meeting NIST security category III) is ready-to-use and automatically chosen.
 
 # Compilation and Execution#
 ## Linux ###
 ### Prerequisites ###
-Java SDK must be installed. The tests were performed with Oracle Java 9 (version of java/javac 14.0.2 2020-07-14).
+Java SDK must be installed. The tests were performed with Oracle Java 9 (version of java/javac 14.0.2 2020-07-14)<sup>[1](#myfootnote1)</sup>.
 The installation was done following this [Guide](https://phoenixnap.com/kb/install-java-on-centos).
 In short, you have to download the *.rpm package from oracle manually. Then, you install it with `sudo yum localinstall *-VERSION-linux-x64.rpm`.
 The appropriate java can be set via `sudo alternatives --config java`.
-Finally, you should set the path of the choosen java in the *.bash_profile* as `export JAVA_HOME=”/your/installation/path/”` which is in our case */usr/java/jdk-14.0.2/bin/java*.
-Make also sure that your java directory contains an *include* folder (*/usr/java/jdk-14.0.2/include* in our case). This folder must conaint the *jni.h* file and a subfolder *linux*.
+Finally, you should set the path of the chosen java in the *.bash_profile* as `export JAVA_HOME=”/your/installation/path/”` which is in our case */usr/java/jdk-14.0.2/bin/java*.
+Make also sure that your java install directory contains an *include* folder (*/usr/java/jdk-14.0.2/include* in our case).
+This folder must contain the *jni.h* file and the subfolder *linux* within the actual *include* directory.
 
-To compile qTesla you need OpenSSL to be installed so that you can link `-lssl` and `-lcrypto` which is done automatically by the modified *Makefile*.
+To promote the location to the JNI-headers to our compilation process you have two options:
+1. You can add the two paths to the `CPATH` environment variable.
+2. You can set the `JNIINC_HARD` variable at the beginning of the *Makefile* to the include path. It will automatically add the second path to the subfolder *linux*. For example, for Oracle Java the path is */usr/lib/jvm/java/include* and for OpenJDK8 it is */usr/lib/jvm/java-openjdk/include* on our CentOS7 machine.
 
-A third prerequisite is [SageMath](https://www.sagemath.org/) which must be installed on the system and which is implicitly used by the make procedure. In order to configure it, you have to set the path to the sage script at the top of the file *list_omegas.py*. In the test-case this line is *#!/home/mburger/SageMath/sage -python*.
+To compile qTESLA you need OpenSSL to be installed so that you can link `-lssl` and `-lcrypto` which is done automatically by the modified *Makefile*.
+We tested with the `openssl-devel` package retrieved by `yum` on our Linux system.
+
+A third (optional) prerequisite is [SageMath](https://www.sagemath.org/) which must be installed on the system.
+It is implicitly used by the make procedure if you want to play around with the parameters L<sub>S</sub> and E<sub>S</sub>.
+In order to configure it, you have to set the path to the main sage script at the top of the file *list_omegas.py*.
+In the our case this line is *#!/home/mburger/SageMath/sage -python*.
 
 The tests were performed with **gcc/10.1** on **CentOS 7** (5.2.11-1.el7.elrepo.x86_64).
-Additionally, the following compilers where checked on that linux: gcc/5.5, gcc/8.4, clang/10. Since SageMath on the test system was compiled with gcc/5.5 a lower version could no be tested. qTesla itsef can also be compiled with gcc/4.9.4.
-Feel free to test other configurations and add the information.
+Additionally, the following compilers where checked on that linux: gcc/5.5, gcc/8.4, clang/10.
+Since SageMath on the test system was compiled with gcc/5.5 a lower version could no be tested.
+qTESLA itsef can also be compiled with gcc/4.9.4.
+Feel free to test other configurations and notify us in the case of success.
 
 ### Compilation process ###
-The process is split in two steps. The first one is to compile the java code.
-Assuming that javac is configured correctly, i.e. `javac --version` works, a simple `javac qTeslaTestJNI.java` should generate the *qTeslaTestJNI* class file.
+The process is realized for Linux in the script *build.sh* and is internally split in two steps.
+To compile the default configuration call `./build.sh` (make *build.sh* executable with `chmod +x build.sh` if it is not executable yet).
 
-The second step is to generate the shared C-library which is called by java afterward. Call `./build.sh 1500 1500` (make *build.sh* executable with `chmod +x build.sh` if it is not executable yet). The two 1500 set the values for the rejection parameter **E** and **S** in the qTesla code. See [qTesla Documentation](https://eprint.iacr.org/2019/085.pdf) on page 14 for details.
-This should generated the library file *libqTeslaTest.so*.
+The first step is to generate the shared C-library which is called by Java afterward.
+This should generated the library file *libqTeslaTest.so* and automatically copies it to the main directory.
+
+Even in the case of errors in the C-part, the second step compiled the Java code.
+This assumes that `javac` is configured correctly, i.e. `javac --version` works and the path to the *JNI*-headers is promoted correctly.
+
+#### OPTIONAL: Compile with a different parameter set ####
+Optionally, you can also test to vary the two rejection parameters L<sub>S</sub> and E<sub>S</sub>.
+See [qTESLA Documentation](https://eprint.iacr.org/2019/085.pdf) on page 14 for details.
+Call, e.g., `./build.sh 950 950` to set L<sub>S</sub> and E<sub>S</sub> to 950.
+A different number of parameters automatically calls the default parameter set 901/901.
+
 
 ### Execution ###
-In order to resolve the dependency of the shared C-library there are two possibility.
+In order to resolve the dependency of the shared C-library there are two possibilities.
 The first one is to pass the search path during the call of the Java executable via
-`java -cp . -Djava.library.path=. qTeslaTestJNI`.
+`java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark 1 1 1 1`.
 
-The second way is to add the path to LD_LIBRARY_PATH for example via `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:YOURPATH`. To identify *YOURPATH* use `pwd` command. Then, the call is a simply `java qTeslaTestJNI`.
+The second way is to add the path to LD_LIBRARY_PATH for example via `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:YOURPATH`. To identify *YOURPATH* use `pwd` command.
 
-In both cases, the code will run one iteration with one signing and one verification of the message "Hallo" by default. You can pass a three-tuple of arguments to change the behavior. For example, if you want to run 4 iterations with 11 signings each of the message "We love JNI" the call is `java -cp . -Djava.library.path=. qTeslaTestJNI 4 11 "We love JNI"` and `java  qTeslaTestJNI 4 11 "We love JNI"`.
+In both cases, the code will run one iteration of qTESLA with one signing and one verification of a random message.
+By passing different parameters you can adept the behavior.
+For example, if you want to run 4 iterations with 11 signings each employing two threads within the C-part use `java -cp ./java/src -Djava.library.path=. sctudarmstadt/qtesla/tests/JavaSecureBenchmark 4 11 1 2`.
+The third  parameter is interpreted as a three bit array.
+ If the last bit is set (odd numbers) qTESLA is tested.
+ If the second bit is set then ECDSA is (additionally) tested.
+ If the third bit is set then RSA-6144 is (additionally) tested.
 
 ## Other operating systems ###
-At the moment, no other systems are possible. Even if qTesla can be compiled, there is the problem that JNI works differently on MaCOSX and Windows. Feel free to remove that limitation.
+At the moment, we successfully performed tests under Windows which will be added to this documentation.
+Even if qTESLA can be compiled, there is the problem that JNI works differently on MaCOSX and Windows. Feel free to remove that limitation.
 
 
 # Documentation of the process so far#
@@ -147,7 +177,7 @@ C:
 
 
 ## Compiling the C-code ##
-This is a rather complicated task and at the moment, the Makefile of qTesla is modified to reach the goal to generate a dynamically linkable library.
+This is a rather complicated task and at the moment, the Makefile of qTESLA is modified to reach the goal to generate a dynamically linkable library.
 The first part is identical to the original file:
 
     consts: list_omegas.py
@@ -157,7 +187,7 @@ The first part is identical to the original file:
     objs_p_III/%.o: %.c
     	@mkdir -p $(@D)
 	    $(CC) -c $(CFLAGS) $(DFLAG) -D _qTESLA_p_III_ $< -o $@
-    
+
     objs/random.o: random/random.c
 	    @mkdir -p $(@D)
     	$(CC) -c $(CFLAGS) random/random.c -o objs/random.o
@@ -165,7 +195,7 @@ The first part is identical to the original file:
     objs/fips202.o: sha3/fips202.c
 	    @mkdir -p $(@D)
 
-And builds the object files of the standard C-files of qTesla.
+And builds the object files of the standard C-files of qTESLA.
 What is changes are the C-compile flags:
 
     CFLAGS = -std=gnu11 -fPIC -O3 -g3 -D $(ARCHITECTURE) -D __LINUX__ -fomit-frame-pointer -fopenmp
@@ -182,13 +212,17 @@ What is changes are the C-compile flags:
 
 which is indicated by the `-shared` and the `fPIC` is also required here.
 
+# Footnotes
+<a name="myfootnote1">1</a>: We also performed successful compilation and running tests with OpenJDK8 (version 1.8.0_262). Hence, you can employ other implementations by adapting the paths to JNI.
+The installation for OpenJDK was directly done with `sudo yum install java-1.8.0-openjdk-devel`.
+However, we had to set the path to `javac`and `java` manually to the environment *PATH* variable.
 
 
 
 
 # Open issues #
-* Using *OpenMP*-pragmas in the qTesla C-code results in access violations
-* In order to use qTesla with full functionality the three methods in the *api.h* of qTesla need to be interfaced via JNI where input variables are changed within the functions:
+* Using *OpenMP*-pragmas in the qTESLA C-code results in access violations
+* In order to use qTESLA with full functionality the three methods in the *api.h* of qTesla need to be interfaced via JNI where input variables are changed within the functions:
 
       int crypto_sign_keypair(
        unsigned char *,
@@ -206,4 +240,3 @@ which is indicated by the `-shared` and the `fPIC` is also required here.
        const unsigned char *,unsigned long long,
        const unsigned char *
        );
-

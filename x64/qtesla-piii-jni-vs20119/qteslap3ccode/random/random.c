@@ -4,17 +4,9 @@
 
 #include "random.h"
 #include <stdlib.h>
-#include <fcntl.h>
-
-
-#ifdef _WIN32
-#include <stdio.h> 
-#include <stdlib.h> 
-#elif __linux__
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/syscall.h>
-#endif
-
 static int lock = -1;
 #define _GNU_SOURCE
 
@@ -28,25 +20,6 @@ static __inline void delay(unsigned int count)
 }
 
 
-#ifdef _WIN32
-static int randombytes_internal(unsigned char* random_array, unsigned int nbytes)
-{
-	unsigned int i = 0;
-	for (i = 0; i < nbytes; i++) {
-		random_array[i] = (unsigned char)(rand() % 255);
-	}
-
-	return passed;
-}
-
-void randombytesarray(unsigned char* random_array, unsigned int nbytes) {
-	randombytes_internal(random_array, nbytes);
-}
-
-void randombytes(unsigned char* random_array, unsigned int nbytes) {
-	randombytes_internal(random_array, nbytes);
-}
-#else
 static int randombytes_internal(unsigned char* random_array, unsigned int nbytes)
 { // Generation of "nbytes" of random values
   int r, n = nbytes, count = 0;
@@ -91,4 +64,4 @@ void randombytes(unsigned char* random_array, unsigned int nbytes)
 }
 
 #endif
-#endif
+

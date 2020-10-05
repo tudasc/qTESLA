@@ -31,8 +31,8 @@
 #endif
 
 #ifdef _WIN32
-#include <stdio.h> 
-#include <stdlib.h> 
+#include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #endif
 
@@ -93,7 +93,7 @@ extern unsigned long long ctr_keygen;
 extern unsigned long long ctr_sign;
 
 
-#ifdef __STATS__   
+#ifdef __STATS__
 
 int print_accrates()
 {
@@ -242,14 +242,12 @@ void test_functions()
 		cycles0[i] = cpucycles() - cycles0[i];
 	}
 	print_results("Encode pk: ", cycles0, NTESTS);
-
 	for (i = 0; i < NTESTS; i++) {
 		cycles0[i] = cpucycles();
 		decode_pk(pk_t, seed, pk);
 		cycles0[i] = cpucycles() - cycles0[i];
 	}
 	print_results("Decode pk: ", cycles0, NTESTS);
-
 	for (i = 0; i < NTESTS; i++) {
 		cycles0[i] = cpucycles();
 		encode_sig(sm, c, z);
@@ -289,19 +287,19 @@ int main(int argc, char *argv[])
   unsigned int i, j, ii;
   unsigned int signsperrun, NRUNS;
   unsigned char r;
-  
+
   int valid, response;
-  
+
   		if(argc < 3) {
 			printf("Not enough arguments. Running with default values.\n");
 			NRUNS = 15;
 			signsperrun = 1;
 		}
-		
+
 		else if (argc == 3)
 		{
 			NRUNS = atoi(argv[1]);
-			signsperrun = atoi(argv[2]);		
+			signsperrun = atoi(argv[2]);
 		}
 
 		else if (argc == 4)
@@ -340,7 +338,7 @@ int main(int argc, char *argv[])
   printf("CRYPTO_SECRETKEY_BYTES: %d\n", (int)CRYPTO_SECRETKEYBYTES);
   printf("CRYPTO_SIGNATURE_BYTES: %d\n\n", CRYPTO_BYTES);
 
-#ifdef __STATS__  
+#ifdef __STATS__
   print_accrates();
   test_functions();
 #endif
@@ -423,7 +421,6 @@ int main(int argc, char *argv[])
 	#else
 			randombytes(&r, 1);
 	#endif
-
 			sm[r % (MLEN+CRYPTO_BYTES)] ^= 1;
 			response = crypto_sign_open(mo, &mlen, sm, smlen, pk);
 			if (response == 0) {
@@ -438,8 +435,6 @@ int main(int argc, char *argv[])
 	  printf("[QTESLA-P3] Keygen: %f sec and %f ops/s.\n", gen_h_time, 1.0 / ( gen_h_time / NRUNS ));
 	  printf("[QTESLA-P3] Sign: %f sec and %f ops/s.\n", sign_h_time, 1.0 / ( sign_h_time / (NRUNS * signsperrun ) ));
 	  printf("[QTESLA-P3] Verify: %f sec and %f ops/s.\n", verify_h_time, 1.0 / ( verify_h_time / (NRUNS * signsperrun) ));
-	  tt = (double)(cend) / (double)CLOCKS_PER_SEC;
-	  printf("[QTESLA-P3] Keygen: %f sec\n", tt);
 	}
 
 	  // Second round with ECDSA

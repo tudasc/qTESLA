@@ -1,6 +1,16 @@
+# SET if they should be hardcoded
+## Choose compiler
 #CC = scorep --nocompiler --user gcc
 #CC=gcc
 
+## jni.h path if it is not set in environment variable CPATH and JAVA_JRE_HOME is not set
+JNIINC_HARD=/usr/lib/jvm/java/include
+
+
+AR=ar rcs
+LD=ld
+RANLIB=ranlib
+JNCINC=
 ifeq "$(CC)" "clang"
     COMPILER=clang
 else ifeq "$(CC)" "gcc"
@@ -16,24 +26,24 @@ else ifeq "$(ARCH)" "ARM"
     ARCHITECTURE=_ARM_
     ARM_SETTING=-lrt
 else ifeq "$(ARCH)" "ARM64"
-    ARCHITECTURE=_ARM64_
-    ARM_SETTING=-lrt
+	CC=armv7hl-redhat-linux-gnueabi-gcc
+	AR=armv7hl-redhat-linux-gnueabi-gcc-ar rcs
+	RANLIB=armv7hl-redhat-linux-gnueabi-gcc-ranlib
+	LD=armv7hl-redhat-linux-gnueabi-ld
+	ARCHITECTURE=_ARM64_
+	ARM_SETTING=-lrt
 endif
 
-AR=ar rcs
-RANLIB=ranlib
-LD=ld
+#If user has chosen to set his path manually
+ifneq "$JNIINC_HARD" ""
+	JNIINC=-I$(JNIINC_HARD) -I$(JNIINC_HARD)/linux
+endif
 
-CFLAGS = -std=gnu11 -fPIC -Ofast -g0 -D $(ARCHITECTURE) -D __LINUX__ -fopenmp #-lpthread #-DSCOREP  -fomit-frame-pointer
+CFLAGS = -std=gnu11 -fPIC -Ofast -g0 -D $(ARCHITECTURE) -D __LINUX__ -D_qTESLA_p_III_ -fopenmp #-lpthread #-DSCOREP  -fomit-frame-pointer
 LDFLAGS=-lm -L/usr/lib/ -lssl -lcrypto -fopenmp #=libiomp5
 
 ifeq "$(CC)" "gcc"
     CFLAGS+= -march=native
-endif
-
-DFLAG=
-ifeq "$(DEBUG)" "TRUE"
-    DFLAG=-DDEBUG
 endif
 
 #DFLAG+=-DPARAM_KEYGEN_BOUND_E=901 -DPARAM_KEYGEN_BOUND_S=901
@@ -78,13 +88,15 @@ lib_p_III: $(OBJECTS_p_III)
 	$(AR) lib_p_III/libqtesla.a $^ 
 	$(RANLIB) lib_p_III/libqtesla.a
 
+
+#-I/usr/java/jdk-14.0.2/include -I/usr/java/jdk-14.0.2/include/linux
 JNI_p_III: $(OBJECTS_p_III)
-	$(CC) $(CFLAGS) -c -I/usr/java/jdk-14.0.2/include -I/usr/java/jdk-14.0.2/include/linux -I./sctudarmstadt/qtesla/cwrapper qTeslaTestJNI.c -o libqTeslaTest.o
+	$(CC) $(CFLAGS) -c  $(JNIINC) -I./sctudarmstadt/qtesla/cwrapper qTeslaTestJNI.c -o libqTeslaTest.o
 	$(CC) -shared $(CFLAGS) -fPIC -o libqTeslaTest.so libqTeslaTest.o $^
 
 tests: lib_p_III
-	$(CC) $(CFLAGS) -c -I/usr/java/jdk-14.0.2/include -I/usr/java/jdk-14.0.2/include/linux -I./sctudarmstadt/qtesla/cwrapper qTeslaTestJNI.c -o libqTeslaTest2.o
-	$(CC) $(CFLAGS) -L./lib_p_III -D _qTESLA_p_III_ $(SOURCE_TEST) libqTeslaTest2.o $(DFLAG) -lqtesla $(LDFLAGS) -I/usr/java/jdk-14.0.2/include -I/usr/java/jdk-14.0.2/include/linux -o test_qtesla-p-III $(ARM_SETTING)
+	$(CC) $(CFLAGS) -c $(JNIINC) -I./sctudarmstadt/qtesla/cwrapper qTeslaTestJNI.c -o libqTeslaTest2.o
+	$(CC) $(CFLAGS) $(JNIINC) -L./lib_p_III -D _qTESLA_p_III_ $(SOURCE_TEST) libqTeslaTest2.o $(DFLAG) -lqtesla $(LDFLAGS) -o test_qtesla-p-III $(ARM_SETTING)
 
 
 .PHONY: clean

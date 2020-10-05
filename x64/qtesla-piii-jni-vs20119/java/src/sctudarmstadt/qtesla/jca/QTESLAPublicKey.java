@@ -30,7 +30,7 @@ public final class QTESLAPublicKey extends QTESLAKey implements PublicKey {
      */
 	@Override
 	public String getAlgorithm() {
-		return "QTESLA";
+		return "qTESLA-P-III";
 	}
 
     /**
@@ -62,10 +62,6 @@ public final class QTESLAPublicKey extends QTESLAKey implements PublicKey {
      * @return the encoded key, or null if the key does not support
      * encoding.
      */
-	@Override
-	public byte[] getEncoded() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
